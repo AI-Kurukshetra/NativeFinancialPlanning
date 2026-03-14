@@ -1,19 +1,20 @@
 import type { ReactNode } from "react";
 
+import { AuthAtmosphere } from "@/components/auth/auth-atmosphere";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
-      <div className="absolute inset-0 -z-10 bg-hero-radial" />
-      <div className="absolute left-12 top-24 -z-10 size-72 rounded-full bg-sky-200/35 blur-3xl dark:bg-sky-900/20" />
-      <div className="absolute bottom-10 right-10 -z-10 size-72 rounded-full bg-emerald-200/35 blur-3xl dark:bg-emerald-900/20" />
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8 sm:px-6 sm:py-10">
+      <AuthAtmosphere />
 
-      <div className="absolute right-4 top-4">
+      <div className="absolute top-4 right-4 z-20">
         <ThemeToggle variant="outline" size="default" />
       </div>
 
-      {children}
+      <div className="relative z-10 flex w-full max-w-5xl items-center justify-center">
+        {children}
+      </div>
     </div>
   );
 }

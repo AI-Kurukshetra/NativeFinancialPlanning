@@ -21,15 +21,15 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
     'authenticated',
     'authenticated',
-    'priya.shah@bacancy.com',
-    crypt('Bacancy#2026', gen_salt('bf')),
+    'emily.parker@northwind.test',
+    crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
-      'email', 'priya.shah@bacancy.com',
-      'full_name', 'Priya Shah',
+      'email', 'emily.parker@northwind.test',
+      'full_name', 'Emily Parker',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -41,15 +41,15 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
     'authenticated',
     'authenticated',
-    'rohan.mehta@bacancy.com',
-    crypt('Bacancy#2026', gen_salt('bf')),
+    'michael.reed@northwind.test',
+    crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
-      'email', 'rohan.mehta@bacancy.com',
-      'full_name', 'Rohan Mehta',
+      'email', 'michael.reed@northwind.test',
+      'full_name', 'Michael Reed',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -61,15 +61,15 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
     'authenticated',
     'authenticated',
-    'neha.desai@bacancy.com',
-    crypt('Bacancy#2026', gen_salt('bf')),
+    'olivia.bennett@northwind.test',
+    crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
-      'email', 'neha.desai@bacancy.com',
-      'full_name', 'Neha Desai',
+      'email', 'olivia.bennett@northwind.test',
+      'full_name', 'Olivia Bennett',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -81,15 +81,15 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
     'authenticated',
     'authenticated',
-    'aarav.trivedi@bacancy.com',
-    crypt('Bacancy#2026', gen_salt('bf')),
+    'daniel.brooks@northwind.test',
+    crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
-      'email', 'aarav.trivedi@bacancy.com',
-      'full_name', 'Aarav Trivedi',
+      'email', 'daniel.brooks@northwind.test',
+      'full_name', 'Daniel Brooks',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -101,15 +101,15 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
     'authenticated',
     'authenticated',
-    'kavya.nair@bacancy.com',
-    crypt('Bacancy#2026', gen_salt('bf')),
+    'sophie.turner@northwind.test',
+    crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
-      'email', 'kavya.nair@bacancy.com',
-      'full_name', 'Kavya Nair',
+      'email', 'sophie.turner@northwind.test',
+      'full_name', 'Sophie Turner',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -141,8 +141,8 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
-      'email', 'priya.shah@bacancy.com',
-      'full_name', 'Priya Shah',
+      'email', 'emily.parker@northwind.test',
+      'full_name', 'Emily Parker',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -157,8 +157,8 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
-      'email', 'rohan.mehta@bacancy.com',
-      'full_name', 'Rohan Mehta',
+      'email', 'michael.reed@northwind.test',
+      'full_name', 'Michael Reed',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -173,8 +173,8 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
-      'email', 'neha.desai@bacancy.com',
-      'full_name', 'Neha Desai',
+      'email', 'olivia.bennett@northwind.test',
+      'full_name', 'Olivia Bennett',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -189,8 +189,8 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
-      'email', 'aarav.trivedi@bacancy.com',
-      'full_name', 'Aarav Trivedi',
+      'email', 'daniel.brooks@northwind.test',
+      'full_name', 'Daniel Brooks',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -205,8 +205,8 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
-      'email', 'kavya.nair@bacancy.com',
-      'full_name', 'Kavya Nair',
+      'email', 'sophie.turner@northwind.test',
+      'full_name', 'Sophie Turner',
       'email_verified', true,
       'phone_verified', false
     ),
@@ -232,8 +232,8 @@ insert into public.organizations (
   updated_at
 )
 values
-  ('6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'Bacancy Services', 'bacancy-services', '3ca312cb-319a-46df-b5cd-8ffeea774839', timezone('utc', now()) - interval '30 days', timezone('utc', now()) - interval '1 day'),
-  ('6a601d44-72db-4c3b-a557-8a16f2a37b70', 'Bacancy Strategy Office', 'bacancy-strategy-office', '3ca312cb-319a-46df-b5cd-8ffeea774839', timezone('utc', now()) - interval '19 days', timezone('utc', now()) - interval '12 hours')
+  ('6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'Northwind Services Group', 'northwind-services-group', '3ca312cb-319a-46df-b5cd-8ffeea774839', timezone('utc', now()) - interval '30 days', timezone('utc', now()) - interval '1 day'),
+  ('6a601d44-72db-4c3b-a557-8a16f2a37b70', 'Northwind Strategy Office', 'northwind-strategy-office', '3ca312cb-319a-46df-b5cd-8ffeea774839', timezone('utc', now()) - interval '19 days', timezone('utc', now()) - interval '12 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -242,12 +242,12 @@ set
 
 insert into public.profiles (id, email, full_name, default_organization_id)
 values
-  ('3ca312cb-319a-46df-b5cd-8ffeea774839', 'jay.patel@bacancy.com', 'Jay Patel', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'priya.shah@bacancy.com', 'Priya Shah', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'rohan.mehta@bacancy.com', 'Rohan Mehta', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003', 'neha.desai@bacancy.com', 'Neha Desai', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004', 'aarav.trivedi@bacancy.com', 'Aarav Trivedi', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'kavya.nair@bacancy.com', 'Kavya Nair', '6a601d44-72db-4c3b-a557-8a16f2a37b6b')
+  ('3ca312cb-319a-46df-b5cd-8ffeea774839', 'john.carter@northwind.test', 'John Carter', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'emily.parker@northwind.test', 'Emily Parker', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'michael.reed@northwind.test', 'Michael Reed', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003', 'olivia.bennett@northwind.test', 'Olivia Bennett', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004', 'daniel.brooks@northwind.test', 'Daniel Brooks', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'sophie.turner@northwind.test', 'Sophie Turner', '6a601d44-72db-4c3b-a557-8a16f2a37b6b')
 on conflict (id) do update
 set
   email = excluded.email,
@@ -290,10 +290,10 @@ insert into public.workbooks (
   updated_at
 )
 values
-  ('11111111-aaaa-4a1a-8a1a-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'FY27 Operating Plan', 'Company-wide revenue, margin, and opex planning model.', 'published', timezone('utc', now()) - interval '12 days', timezone('utc', now()) - interval '2 hours'),
-  ('22222222-bbbb-4b2b-8b2b-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'Headcount and Hiring Model', 'Hiring ramp, departmental capacity, and compensation checks.', 'in_review', timezone('utc', now()) - interval '10 days', timezone('utc', now()) - interval '6 hours'),
-  ('33333333-cccc-4c3c-8c3c-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Services Revenue Forecast', 'Pipeline-backed revenue outlook with scenario assumptions.', 'draft', timezone('utc', now()) - interval '8 days', timezone('utc', now()) - interval '1 day'),
-  ('44444444-dddd-4d4d-8d4d-444444444444', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Board Pack Source Model', 'Executive board pack source data and KPI staging workbook.', 'published', timezone('utc', now()) - interval '15 days', timezone('utc', now()) - interval '4 hours')
+  ('11111111-aaaa-4a1a-8a1a-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'FY27 Corporate Operating Plan', 'Company-wide revenue, margin, and operating expense planning model.', 'published', timezone('utc', now()) - interval '12 days', timezone('utc', now()) - interval '2 hours'),
+  ('22222222-bbbb-4b2b-8b2b-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'Workforce Capacity Plan', 'Hiring pace, team capacity, and compensation planning workbook.', 'in_review', timezone('utc', now()) - interval '10 days', timezone('utc', now()) - interval '6 hours'),
+  ('33333333-cccc-4c3c-8c3c-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Client Revenue Forecast', 'Opportunity-backed revenue outlook with scenario assumptions.', 'draft', timezone('utc', now()) - interval '8 days', timezone('utc', now()) - interval '1 day'),
+  ('44444444-dddd-4d4d-8d4d-444444444444', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Board Reporting Source Model', 'Board reporting source data and KPI staging workbook.', 'published', timezone('utc', now()) - interval '15 days', timezone('utc', now()) - interval '4 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -398,8 +398,8 @@ insert into public.budgets (
   updated_at
 )
 values
-  ('55555555-aaaa-4555-8555-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'FY27 Annual Budget', 'active', current_date - 45, current_date + 320, timezone('utc', now()) - interval '10 days', timezone('utc', now()) - interval '5 hours'),
-  ('55555555-aaaa-4555-8555-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Services Delivery Budget', 'draft', current_date - 10, current_date + 180, timezone('utc', now()) - interval '8 days', timezone('utc', now()) - interval '8 hours')
+  ('55555555-aaaa-4555-8555-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'FY27 Company Budget', 'active', current_date - 45, current_date + 320, timezone('utc', now()) - interval '10 days', timezone('utc', now()) - interval '5 hours'),
+  ('55555555-aaaa-4555-8555-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Delivery Capacity Budget', 'draft', current_date - 10, current_date + 180, timezone('utc', now()) - interval '8 days', timezone('utc', now()) - interval '8 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -420,8 +420,8 @@ insert into public.forecasts (
   updated_at
 )
 values
-  ('66666666-bbbb-4666-8666-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'H2 Rolling Forecast', 'active', 18, timezone('utc', now()) - interval '7 days', timezone('utc', now()) - interval '1 day'),
-  ('66666666-bbbb-4666-8666-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Hiring Capacity Forecast', 'draft', 12, timezone('utc', now()) - interval '6 days', timezone('utc', now()) - interval '9 hours')
+  ('66666666-bbbb-4666-8666-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Second Half Rolling Forecast', 'active', 18, timezone('utc', now()) - interval '7 days', timezone('utc', now()) - interval '1 day'),
+  ('66666666-bbbb-4666-8666-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Workforce Capacity Forecast', 'draft', 12, timezone('utc', now()) - interval '6 days', timezone('utc', now()) - interval '9 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -442,9 +442,9 @@ insert into public.reports (
   updated_at
 )
 values
-  ('77777777-cccc-4777-8777-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Executive KPI Pack', 'published', '{"layout":"executive_summary","sections":["Revenue","Margin","Cash"]}'::jsonb, timezone('utc', now()) - interval '4 hours', timezone('utc', now()) - interval '9 days', timezone('utc', now()) - interval '4 hours'),
-  ('77777777-cccc-4777-8777-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Revenue Variance Review', 'generated', '{"layout":"variance_bridge","sections":["Pipeline","Close Rate","Bookings"]}'::jsonb, timezone('utc', now()) - interval '1 day', timezone('utc', now()) - interval '6 days', timezone('utc', now()) - interval '1 day'),
-  ('77777777-cccc-4777-8777-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Hiring Plan Status', 'draft', '{"layout":"workforce_summary","sections":["Open Roles","Attrition","Ramp"]}'::jsonb, null, timezone('utc', now()) - interval '3 days', timezone('utc', now()) - interval '3 days')
+  ('77777777-cccc-4777-8777-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Executive Performance Pack', 'published', '{"layout":"executive_summary","sections":["Revenue","Margin","Cash"]}'::jsonb, timezone('utc', now()) - interval '4 hours', timezone('utc', now()) - interval '9 days', timezone('utc', now()) - interval '4 hours'),
+  ('77777777-cccc-4777-8777-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Revenue Variance Report', 'generated', '{"layout":"variance_bridge","sections":["Pipeline","Close Rate","Bookings"]}'::jsonb, timezone('utc', now()) - interval '1 day', timezone('utc', now()) - interval '6 days', timezone('utc', now()) - interval '1 day'),
+  ('77777777-cccc-4777-8777-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Workforce Plan Status', 'draft', '{"layout":"workforce_summary","sections":["Open Roles","Attrition","Ramp"]}'::jsonb, null, timezone('utc', now()) - interval '3 days', timezone('utc', now()) - interval '3 days')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -465,8 +465,8 @@ insert into public.workflows (
   updated_at
 )
 values
-  ('88888888-dddd-4888-8888-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'FY27 Budget Approval', 'pending_approval', 'Controller sign-off', timezone('utc', now()) - interval '5 days', timezone('utc', now()) - interval '2 hours'),
-  ('88888888-dddd-4888-8888-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '44444444-dddd-4d4d-8d4d-444444444444', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Board Pack Publication', 'approved', 'Published', timezone('utc', now()) - interval '14 days', timezone('utc', now()) - interval '4 hours')
+  ('88888888-dddd-4888-8888-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'FY27 Budget Review', 'pending_approval', 'Controller sign-off', timezone('utc', now()) - interval '5 days', timezone('utc', now()) - interval '2 hours'),
+  ('88888888-dddd-4888-8888-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '44444444-dddd-4d4d-8d4d-444444444444', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Board Report Publication', 'approved', 'Published', timezone('utc', now()) - interval '14 days', timezone('utc', now()) - interval '4 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -506,9 +506,9 @@ insert into public.versions (
   created_at
 )
 values
-  ('99999999-eeee-4999-8999-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Baseline import', '{"workbook":{"name":"FY27 Operating Plan"},"worksheets":[{"name":"Summary","cells":16}]}'::jsonb, timezone('utc', now()) - interval '11 days'),
-  ('99999999-eeee-4999-8999-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'Pre-board review', '{"workbook":{"name":"FY27 Operating Plan"},"worksheets":[{"name":"Summary","cells":16},{"name":"Departments","cells":0}]}'::jsonb, timezone('utc', now()) - interval '2 days'),
-  ('99999999-eeee-4999-8999-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'Hiring committee cut', '{"workbook":{"name":"Headcount and Hiring Model"},"worksheets":[{"name":"Roles","cells":6},{"name":"Hiring Plan","cells":4}]}'::jsonb, timezone('utc', now()) - interval '3 days')
+  ('99999999-eeee-4999-8999-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Baseline import', '{"workbook":{"name":"FY27 Corporate Operating Plan"},"worksheets":[{"name":"Summary","cells":16}]}'::jsonb, timezone('utc', now()) - interval '11 days'),
+  ('99999999-eeee-4999-8999-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '11111111-aaaa-4a1a-8a1a-111111111111', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'Pre-board review', '{"workbook":{"name":"FY27 Corporate Operating Plan"},"worksheets":[{"name":"Summary","cells":16},{"name":"Departments","cells":0}]}'::jsonb, timezone('utc', now()) - interval '2 days'),
+  ('99999999-eeee-4999-8999-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'Hiring committee review', '{"workbook":{"name":"Workforce Capacity Plan"},"worksheets":[{"name":"Roles","cells":6},{"name":"Hiring Plan","cells":4}]}'::jsonb, timezone('utc', now()) - interval '3 days')
 on conflict (id) do update
 set
   label = excluded.label,
@@ -550,8 +550,8 @@ insert into public.templates (
   updated_at
 )
 values
-  ('bbbbbbbb-1111-4111-8111-111111111111', null, '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Executive KPI Template', 'executive', 'Reusable KPI board pack starter for monthly reporting.', '{"sheets":["Executive KPIs","Bridge","Notes"],"layout":"executive_summary"}'::jsonb, timezone('utc', now()) - interval '16 days', timezone('utc', now()) - interval '6 hours'),
-  ('bbbbbbbb-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Headcount Planning Template', 'workforce', 'Department hiring model with capacity and payroll tabs.', '{"sheets":["Roles","Hiring Plan","Payroll"],"layout":"workforce_summary"}'::jsonb, timezone('utc', now()) - interval '9 days', timezone('utc', now()) - interval '7 hours')
+  ('bbbbbbbb-1111-4111-8111-111111111111', null, '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Executive Reporting Template', 'executive', 'Reusable executive reporting starter for monthly performance reviews.', '{"sheets":["Executive KPIs","Bridge","Notes"],"layout":"executive_summary"}'::jsonb, timezone('utc', now()) - interval '16 days', timezone('utc', now()) - interval '6 hours'),
+  ('bbbbbbbb-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Workforce Planning Template', 'workforce', 'Team hiring model with capacity and payroll planning tabs.', '{"sheets":["Roles","Hiring Plan","Payroll"],"layout":"workforce_summary"}'::jsonb, timezone('utc', now()) - interval '9 days', timezone('utc', now()) - interval '7 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -571,9 +571,9 @@ insert into public.data_sources (
   updated_at
 )
 values
-  ('cccccccc-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'NetSuite ERP Mirror', 'erp', '{"syncMode":"daily","entity":"gl_transactions","owner":"finance_systems"}'::jsonb, timezone('utc', now()) - interval '20 days', timezone('utc', now()) - interval '5 hours'),
-  ('cccccccc-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Salesforce Pipeline Snapshot', 'crm', '{"syncMode":"manual","entity":"opportunities","owner":"revops"}'::jsonb, timezone('utc', now()) - interval '11 days', timezone('utc', now()) - interval '1 day'),
-  ('cccccccc-3333-4333-8333-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Payroll Export Feed', 'payroll', '{"syncMode":"weekly","entity":"employee_costs","owner":"people_ops"}'::jsonb, timezone('utc', now()) - interval '7 days', timezone('utc', now()) - interval '8 hours')
+  ('cccccccc-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'ERP Ledger Mirror', 'erp', '{"syncMode":"daily","entity":"gl_transactions","owner":"finance_systems"}'::jsonb, timezone('utc', now()) - interval '20 days', timezone('utc', now()) - interval '5 hours'),
+  ('cccccccc-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'CRM Opportunity Snapshot', 'crm', '{"syncMode":"manual","entity":"opportunities","owner":"revops"}'::jsonb, timezone('utc', now()) - interval '11 days', timezone('utc', now()) - interval '1 day'),
+  ('cccccccc-3333-4333-8333-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Payroll Cost Feed', 'payroll', '{"syncMode":"weekly","entity":"employee_costs","owner":"people_ops"}'::jsonb, timezone('utc', now()) - interval '7 days', timezone('utc', now()) - interval '8 hours')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -595,11 +595,11 @@ insert into public.notifications (
   updated_at
 )
 values
-  ('eeeeeeee-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'workflow', 'Budget approval moved forward', 'FY27 Budget Approval now only needs approver sign-off.', '/workflows', '{"workflowId":"88888888-dddd-4888-8888-111111111111"}'::jsonb, null, timezone('utc', now()) - interval '2 hours', timezone('utc', now()) - interval '2 hours'),
-  ('eeeeeeee-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'comment', 'Revenue comment still open', 'Jay left a revenue note that needs an updated CRM pull.', '/workbooks/11111111-aaaa-4a1a-8a1a-111111111111', '{"commentId":"aaaaaaaa-1111-4111-8111-111111111111"}'::jsonb, null, timezone('utc', now()) - interval '1 day', timezone('utc', now()) - interval '1 day'),
-  ('eeeeeeee-3333-4333-8333-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'system', 'Pipeline forecast refreshed', 'A fresh pipeline snapshot is available for the revenue workbook.', '/workbooks/33333333-cccc-4c3c-8c3c-333333333333', '{"sourceId":"cccccccc-2222-4222-8222-222222222222"}'::jsonb, timezone('utc', now()) - interval '8 hours', timezone('utc', now()) - interval '1 day', timezone('utc', now()) - interval '8 hours'),
-  ('eeeeeeee-4444-4444-8444-444444444444', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003', 'workflow', 'Approval requested', 'Please review the FY27 Budget Approval workflow.', '/workflows', '{"approvalId":"98989898-1111-4989-8989-222222222222"}'::jsonb, null, timezone('utc', now()) - interval '3 hours', timezone('utc', now()) - interval '3 hours'),
-  ('eeeeeeee-5555-4555-8555-555555555555', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004', 'report', 'Board pack published', 'Executive KPI Pack is now published and visible to workspace members.', '/reports', '{"reportId":"77777777-cccc-4777-8777-111111111111"}'::jsonb, null, timezone('utc', now()) - interval '4 hours', timezone('utc', now()) - interval '4 hours')
+  ('eeeeeeee-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'workflow', 'Budget review moved forward', 'FY27 Budget Review now only needs final approver sign-off.', '/workflows', '{"workflowId":"88888888-dddd-4888-8888-111111111111"}'::jsonb, null, timezone('utc', now()) - interval '2 hours', timezone('utc', now()) - interval '2 hours'),
+  ('eeeeeeee-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'comment', 'Revenue note still open', 'John left a revenue note that still needs an updated CRM pull.', '/workbooks/11111111-aaaa-4a1a-8a1a-111111111111', '{"commentId":"aaaaaaaa-1111-4111-8111-111111111111"}'::jsonb, null, timezone('utc', now()) - interval '1 day', timezone('utc', now()) - interval '1 day'),
+  ('eeeeeeee-3333-4333-8333-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'system', 'Revenue forecast refreshed', 'A fresh opportunity snapshot is available for the revenue workbook.', '/workbooks/33333333-cccc-4c3c-8c3c-333333333333', '{"sourceId":"cccccccc-2222-4222-8222-222222222222"}'::jsonb, timezone('utc', now()) - interval '8 hours', timezone('utc', now()) - interval '1 day', timezone('utc', now()) - interval '8 hours'),
+  ('eeeeeeee-4444-4444-8444-444444444444', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003', 'workflow', 'Approval requested', 'Please review the FY27 Budget Review workflow.', '/workflows', '{"approvalId":"98989898-1111-4989-8989-222222222222"}'::jsonb, null, timezone('utc', now()) - interval '3 hours', timezone('utc', now()) - interval '3 hours'),
+  ('eeeeeeee-5555-4555-8555-555555555555', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004', 'report', 'Board report published', 'Executive Performance Pack is now published and visible to workspace members.', '/reports', '{"reportId":"77777777-cccc-4777-8777-111111111111"}'::jsonb, null, timezone('utc', now()) - interval '4 hours', timezone('utc', now()) - interval '4 hours')
 on conflict (id) do update
 set
   title = excluded.title,
@@ -624,8 +624,8 @@ insert into public.schedules (
   updated_at
 )
 values
-  ('dddddddd-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '77777777-cccc-4777-8777-111111111111', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Monday executive pack', '0 8 * * 1', 'Asia/Kolkata', 'active', timezone('utc', now()) + interval '2 days', timezone('utc', now()) - interval '5 days', timezone('utc', now()) - interval '9 days', timezone('utc', now()) - interval '4 hours'),
-  ('dddddddd-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '77777777-cccc-4777-8777-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Revenue digest', '0 10 1 * *', 'Asia/Kolkata', 'paused', timezone('utc', now()) + interval '17 days', timezone('utc', now()) - interval '18 days', timezone('utc', now()) - interval '6 days', timezone('utc', now()) - interval '1 day')
+  ('dddddddd-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '77777777-cccc-4777-8777-111111111111', '3ca312cb-319a-46df-b5cd-8ffeea774839', 'Monday performance pack', '0 8 * * 1', 'Asia/Kolkata', 'active', timezone('utc', now()) + interval '2 days', timezone('utc', now()) - interval '5 days', timezone('utc', now()) - interval '9 days', timezone('utc', now()) - interval '4 hours'),
+  ('dddddddd-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '77777777-cccc-4777-8777-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Revenue review digest', '0 10 1 * *', 'Asia/Kolkata', 'paused', timezone('utc', now()) + interval '17 days', timezone('utc', now()) - interval '18 days', timezone('utc', now()) - interval '6 days', timezone('utc', now()) - interval '1 day')
 on conflict (id) do update
 set
   name = excluded.name,
@@ -888,9 +888,9 @@ insert into public.scenarios (
   updated_at
 )
 values
-  ('18181818-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '66666666-bbbb-4666-8666-111111111111', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Base Case', 'active', '{"closeRate":0.32,"rampMonths":2,"pricing":"current"}'::jsonb, timezone('utc', now()) - interval '5 days', timezone('utc', now()) - interval '4 hours'),
-  ('18181818-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '66666666-bbbb-4666-8666-111111111111', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Downside Control', 'draft', '{"closeRate":0.26,"rampMonths":3,"pricing":"discounted"}'::jsonb, timezone('utc', now()) - interval '4 days', timezone('utc', now()) - interval '2 hours'),
-  ('18181818-3333-4333-8333-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '66666666-bbbb-4666-8666-222222222222', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Hiring Acceleration', 'draft', '{"backfills":8,"newLogos":3,"utilizationFloor":0.78}'::jsonb, timezone('utc', now()) - interval '2 days', timezone('utc', now()) - interval '1 hour')
+  ('18181818-1111-4111-8111-111111111111', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '66666666-bbbb-4666-8666-111111111111', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Core Case', 'active', '{"closeRate":0.32,"rampMonths":2,"pricing":"current"}'::jsonb, timezone('utc', now()) - interval '5 days', timezone('utc', now()) - interval '4 hours'),
+  ('18181818-2222-4222-8222-222222222222', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '66666666-bbbb-4666-8666-111111111111', '33333333-cccc-4c3c-8c3c-333333333333', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'Conservative Case', 'draft', '{"closeRate":0.26,"rampMonths":3,"pricing":"discounted"}'::jsonb, timezone('utc', now()) - interval '4 days', timezone('utc', now()) - interval '2 hours'),
+  ('18181818-3333-4333-8333-333333333333', '6a601d44-72db-4c3b-a557-8a16f2a37b6b', '66666666-bbbb-4666-8666-222222222222', '22222222-bbbb-4b2b-8b2b-222222222222', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'Growth Hiring Case', 'draft', '{"backfills":8,"newLogos":3,"utilizationFloor":0.78}'::jsonb, timezone('utc', now()) - interval '2 days', timezone('utc', now()) - interval '1 hour')
 on conflict (id) do update
 set
   name = excluded.name,
