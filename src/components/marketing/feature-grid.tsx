@@ -129,7 +129,7 @@ function PlatformVisual({
 
   if (panel === "chart") {
     return (
-      <div className="relative mt-4 flex min-h-[30rem] flex-1 flex-col rounded-[26px] border border-black/8 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent)] p-6 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]">
+      <div className="relative mt-4 flex min-h-[26rem] flex-1 flex-col rounded-[26px] border border-black/8 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent)] p-5 sm:p-6 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]">
         <div className="flex items-center justify-between text-[11px] tracking-[0.2em] text-neutral-500 uppercase dark:text-neutral-400">
           <span>Forecast scene</span>
           <span>Live model</span>
@@ -158,13 +158,13 @@ function PlatformVisual({
             </motion.div>
           ))}
         </div>
-        <div className="mt-4 grid flex-1 gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
+        <div className="mt-4 grid flex-1 items-start gap-4 xl:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)]">
           <div className="min-w-0 rounded-[24px] border border-black/8 bg-white/92 p-5 dark:border-white/10 dark:bg-black/88">
             <div className="flex flex-wrap items-center justify-between gap-3 text-[10px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
               <span>Quarterly ladder</span>
               <span>Realtime revision</span>
             </div>
-            <div className="relative mt-4 overflow-hidden rounded-[20px] border border-black/6 bg-[linear-gradient(180deg,rgba(0,0,0,0.03),transparent_48%)] px-4 pt-5 pb-6 dark:border-white/8 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_48%)]">
+            <div className="relative mt-4 overflow-hidden rounded-[20px] border border-black/6 bg-[linear-gradient(180deg,rgba(0,0,0,0.03),transparent_48%)] px-3 pt-4 pb-5 sm:px-4 sm:pt-5 sm:pb-6 dark:border-white/8 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_48%)]">
               <div className="pointer-events-none absolute inset-x-4 top-5 grid gap-5">
                 {[0, 1, 2, 3].map((row) => (
                   <div
@@ -180,9 +180,9 @@ function PlatformVisual({
                 viewBox="0 0 320 220"
               >
                 <motion.path
+                  className="stroke-neutral-900/70 dark:stroke-white/80"
                   d="M24 162 C 72 138, 112 126, 154 102 S 232 70, 294 46"
                   fill="none"
-                  stroke="rgba(17,24,39,0.72)"
                   strokeDasharray="8 10"
                   strokeLinecap="round"
                   strokeWidth="4"
@@ -198,7 +198,7 @@ function PlatformVisual({
                   }}
                 />
               </svg>
-              <div className="relative z-10 grid min-h-[18rem] grid-cols-4 gap-3 sm:gap-4">
+              <div className="relative z-10 grid min-h-[14rem] grid-cols-4 items-end gap-2.5 sm:min-h-[16rem] sm:gap-4">
                 {forecastColumns.map((quarter, index) => (
                   <div
                     key={quarter.label}
@@ -256,9 +256,9 @@ function PlatformVisual({
               {scenarioSignals.map((signal) => (
                 <div
                   key={signal.title}
-                  className="min-w-0 rounded-[18px] border border-black/8 bg-neutral-50 px-4 py-4 dark:border-white/10 dark:bg-neutral-950"
+                  className="min-w-0 rounded-[18px] border border-black/8 bg-neutral-50 px-4 py-3.5 dark:border-white/10 dark:bg-neutral-950"
                 >
-                  <div className="flex min-w-0 items-start justify-between gap-3">
+                  <div className="grid min-w-0 gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-black dark:text-white">
                         {signal.title}
@@ -267,7 +267,7 @@ function PlatformVisual({
                         {signal.note}
                       </p>
                     </div>
-                    <span className="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1 text-sm font-semibold text-black dark:border-white/10 dark:bg-black dark:text-white">
+                    <span className="shrink-0 justify-self-start rounded-full border border-black/10 bg-white px-3 py-1 text-sm font-semibold text-black sm:justify-self-end dark:border-white/10 dark:bg-black dark:text-white">
                       {signal.value}
                     </span>
                   </div>
@@ -275,9 +275,9 @@ function PlatformVisual({
               ))}
             </div>
           </div>
-          <div className="grid gap-4">
+          <div className="grid content-start gap-4">
             <motion.div
-              className="rounded-[24px] border border-black/10 bg-white p-5 shadow-[0_18px_36px_rgba(0,0,0,0.08)] dark:border-white/12 dark:bg-black dark:shadow-[0_18px_36px_rgba(0,0,0,0.36)]"
+              className="rounded-[24px] border border-black/10 bg-white p-4 shadow-[0_18px_36px_rgba(0,0,0,0.08)] sm:p-5 dark:border-white/12 dark:bg-black dark:shadow-[0_18px_36px_rgba(0,0,0,0.36)]"
               animate={prefersReducedMotion ? undefined : { y: [0, -8, 0] }}
               transition={{
                 duration: 4.8,
@@ -293,7 +293,7 @@ function PlatformVisual({
                   Stable
                 </span>
               </div>
-              <div className="mt-5 grid grid-cols-[auto_1fr] gap-4">
+              <div className="mt-4 grid grid-cols-[auto_1fr] gap-3">
                 <div className="relative flex size-16 items-center justify-center rounded-full border border-black/8 bg-neutral-50 dark:border-white/10 dark:bg-neutral-950">
                   <motion.div
                     className="absolute inset-2 rounded-full border-2 border-dashed border-black/12 dark:border-white/14"
@@ -308,7 +308,7 @@ function PlatformVisual({
                     98
                   </span>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-neutral-600 dark:text-neutral-300">
                       Variance
@@ -327,7 +327,7 @@ function PlatformVisual({
                   </div>
                 </div>
               </div>
-              <div className="mt-5 space-y-3">
+              <div className="mt-4 space-y-2.5">
                 <div className="h-2 rounded-full bg-neutral-100 dark:bg-neutral-900">
                   <motion.div
                     className="h-2 rounded-full bg-black dark:bg-white"
@@ -343,7 +343,7 @@ function PlatformVisual({
                     }}
                   />
                 </div>
-                <div className="flex items-end gap-1.5">
+                <div className="flex h-[5.25rem] items-end gap-1.5">
                   {[22, 36, 32, 54, 48, 68, 62].map((height, index) => (
                     <motion.div
                       key={height}
@@ -365,7 +365,7 @@ function PlatformVisual({
                 </div>
               </div>
             </motion.div>
-            <div className="rounded-[24px] border border-black/8 bg-white/92 p-5 dark:border-white/10 dark:bg-black/88">
+            <div className="rounded-[24px] border border-black/8 bg-white/92 p-4 sm:p-5 dark:border-white/10 dark:bg-black/88">
               <div className="flex items-center justify-between">
                 <p className="text-[11px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
                   Scenario drift
@@ -389,12 +389,24 @@ function PlatformVisual({
                 ].map(([label, value, tone]) => (
                   <div
                     key={label}
-                    className="flex items-center justify-between rounded-[18px] border border-black/8 bg-neutral-50 px-3 py-2.5 dark:border-white/10 dark:bg-neutral-950"
+                    className="grid gap-2 rounded-[18px] border border-black/8 bg-neutral-50 px-3 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center dark:border-white/10 dark:bg-neutral-950"
                   >
-                    <span className="text-sm text-neutral-600 dark:text-neutral-300">
-                      {label}
-                    </span>
-                    <span className={cn("text-sm font-medium", tone)}>
+                    <div className="min-w-0">
+                      <p className="text-sm text-neutral-600 dark:text-neutral-300">
+                        {label}
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+                        {label === "Demand ramp"
+                          ? "Expansion plan reopened after pipeline recovery."
+                          : "Ops and finance approvals landed in the same cycle."}
+                      </p>
+                    </div>
+                    <span
+                      className={cn(
+                        "justify-self-start text-sm font-medium sm:justify-self-end",
+                        tone,
+                      )}
+                    >
                       {value}
                     </span>
                   </div>

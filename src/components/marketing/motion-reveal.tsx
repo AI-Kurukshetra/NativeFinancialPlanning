@@ -13,8 +13,6 @@ type MotionRevealProps = {
   direction?: "up" | "down" | "left" | "right" | "none";
   threshold?: number;
   once?: boolean;
-  stagger?: number;
-  staggerChildren?: boolean;
 };
 
 export function MotionReveal({
@@ -25,12 +23,10 @@ export function MotionReveal({
   direction = "up",
   threshold = 0.15,
   once = true,
-  stagger = 0.1,
-  staggerChildren = false,
 }: MotionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
 
-  const distance = 18;
+  const distance = 14;
   const offsets = {
     up: { x: 0, y: distance },
     down: { x: 0, y: -distance },
@@ -44,73 +40,17 @@ export function MotionReveal({
       opacity: 0,
       x: prefersReducedMotion ? 0 : offsets[direction].x,
       y: prefersReducedMotion ? 0 : offsets[direction].y,
-      filter: prefersReducedMotion ? "none" : "blur(3px)",
     },
     visible: {
       opacity: 1,
       x: 0,
       y: 0,
-      filter: "blur(0px)",
       transition: {
         duration: prefersReducedMotion ? 0.01 : duration,
         ease: [0.22, 1, 0.36, 1],
       },
     },
   };
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: staggerChildren ? stagger : 0,
-        delayChildren: delay,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      x: prefersReducedMotion ? 0 : offsets[direction].x,
-      y: prefersReducedMotion ? 0 : offsets[direction].y,
-      filter: prefersReducedMotion ? "none" : "blur(3px)",
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: prefersReducedMotion ? 0.01 : duration,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  if (staggerChildren && Array.isArray(children)) {
-    return (
-      <motion.div
-        className={cn(className)}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: threshold, once }}
-        variants={containerVariants}
-      >
-        {children.map((child, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            transition={{
-              delay: delay + index * stagger,
-            }}
-          >
-            {child}
-          </motion.div>
-        ))}
-      </motion.div>
-    );
-  }
 
   return (
     <motion.div
@@ -163,27 +103,3 @@ export const MotionPresets = {
     threshold: 0.15,
   },
 };
-
-// Stagger container for multiple children
-export function StaggerContainer({
-  children,
-  className,
-  delay = 0,
-  stagger = 0.1,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  stagger?: number;
-}) {
-  return (
-    <MotionReveal
-      className={className}
-      delay={delay}
-      stagger={stagger}
-      staggerChildren
-    >
-      {children}
-    </MotionReveal>
-  );
-}

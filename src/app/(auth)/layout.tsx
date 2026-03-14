@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { ThemeToggleWrapper } from "@/components/ui/theme-toggle-wrapper";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <div className="absolute bottom-10 right-10 -z-10 size-72 rounded-full bg-emerald-200/35 blur-3xl dark:bg-emerald-900/20" />
 
       <div className="absolute right-4 top-4">
-        <ThemeToggleWrapper />
+        <ThemeToggle variant="outline" size="default" />
       </div>
 
       {children}

@@ -92,24 +92,16 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   background-color: hsl(var(--background));
-  transition:
-    background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    color 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body {
   min-height: 100vh;
   background: var(--page-gradient);
-  background-attachment: fixed;
   color: hsl(var(--foreground));
   font-family: var(--font-body);
   overflow-x: hidden;
-  transition:
-    background 360ms cubic-bezier(0.22, 1, 0.36, 1),
-    color 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body::before {
@@ -126,9 +118,6 @@ body::before {
   );
   opacity: 0.72;
   pointer-events: none;
-  transition:
-    background-image 360ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body::after {
@@ -141,7 +130,6 @@ body::after {
     radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.02), transparent 24%);
   content: "";
   pointer-events: none;
-  transition: background 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dark body::after {
@@ -202,11 +190,6 @@ button {
   box-shadow: var(--glass-shadow);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transition:
-    background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1),
-    backdrop-filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .glass-strong {
@@ -215,11 +198,6 @@ button {
   box-shadow: var(--glass-shadow-strong);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
-  transition:
-    background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1),
-    backdrop-filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .text-balance {
@@ -296,18 +274,13 @@ button {
   }
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 420ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(root) {
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(root) {
-  mix-blend-mode: normal;
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -319,9 +292,7 @@ button {
   body::before,
   body::after,
   .glass,
-  .glass-strong,
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  .glass-strong {
     transition: none;
     animation: none;
   }

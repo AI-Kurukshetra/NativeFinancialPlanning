@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -100,6 +99,13 @@ const tapeItems = [
   { label: "2 items flagged", kind: "metric" as const },
 ];
 
+const reviewQueueItems = [
+  "Marketing scenario unlocked after spend guardrail approval.",
+  "Hiring plan flagged because pipeline assumptions slipped two weeks.",
+  "Board pack refresh ready with variance notes attached to each driver.",
+  "Model health is stable. 98.4% of workbook checks passed during the latest sync.",
+];
+
 const operatingPlanBars = [
   {
     label: "Q1",
@@ -121,38 +127,10 @@ const operatingPlanBars = [
     value: 88,
     tone: "from-yellow-100 via-amber-300 to-yellow-500",
   },
-  {
-    label: "Q5",
-    value: 76,
-    tone: "from-amber-200 via-yellow-300 to-amber-500",
-  },
-  {
-    label: "Q6",
-    value: 94,
-    tone: "from-yellow-100 via-amber-300 to-yellow-500",
-  },
 ];
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width;
-    const y = (event.clientY - bounds.top) / bounds.height;
-
-    setTilt({
-      rotateX: (0.5 - y) * 6,
-      rotateY: (x - 0.5) * 8,
-    });
-  };
-
-  const resetTilt = () => setTilt({ rotateX: 0, rotateY: 0 });
 
   return (
     <section className="relative isolate overflow-hidden px-4 pt-8 pb-14 sm:px-6 lg:px-8 lg:pt-16 lg:pb-20">
@@ -260,34 +238,15 @@ export function Hero() {
         </div>
 
         <MotionReveal {...MotionPresets.slideLeft} delay={0.3}>
-          <motion.div
-            className="relative [perspective:1600px]"
-            onPointerLeave={resetTilt}
-            onPointerMove={handlePointerMove}
-            style={{
-              transformStyle: "preserve-3d",
-            }}
-          >
+          <div className="relative [perspective:1600px]">
             <div className="pointer-events-none absolute inset-6 -z-10 [transform:translateZ(-40px)_rotateX(8deg)_rotateY(-10deg)] rounded-[34px] border border-black/6 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(255,255,255,0.2))] dark:border-white/8 dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]" />
             <div className="pointer-events-none absolute inset-x-10 top-10 -z-10 h-24 [transform:translateZ(-20px)] rounded-full bg-amber-300/30 blur-3xl dark:bg-amber-300/16" />
             <Card
               className="relative overflow-hidden border-black/8 bg-white dark:border-white/10 dark:bg-black"
               hover
             >
-              <motion.div
+              <div
                 className="relative"
-                animate={
-                  prefersReducedMotion
-                    ? undefined
-                    : {
-                        rotateX: tilt.rotateX,
-                        rotateY: tilt.rotateY,
-                      }
-                }
-                transition={{
-                  rotateX: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
-                  rotateY: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
-                }}
                 style={{
                   transformStyle: "preserve-3d",
                 }}
@@ -309,24 +268,24 @@ export function Hero() {
                       </Badge>
                     </div>
 
-                    <div className="rounded-[28px] border border-amber-500/20 bg-[linear-gradient(180deg,rgba(255,251,235,0.96),rgba(255,255,255,1))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:border-amber-200/14 dark:bg-[linear-gradient(180deg,rgba(245,158,11,0.14),rgba(10,10,10,0.96))]">
-                      <div className="mb-4 flex items-center gap-2 text-xs tracking-[0.28em] text-neutral-600 uppercase dark:text-amber-100/78">
+                    <div className="rounded-[28px] border border-amber-500/20 bg-[linear-gradient(180deg,rgba(255,251,235,0.96),rgba(255,255,255,1))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-5 dark:border-amber-200/14 dark:bg-[linear-gradient(180deg,rgba(245,158,11,0.14),rgba(10,10,10,0.96))]">
+                      <div className="mb-3 flex items-center gap-2 text-xs tracking-[0.28em] text-neutral-600 uppercase dark:text-amber-100/78">
                         <ChartSpline className="size-4" />
                         Review rhythm
                       </div>
                       <div className="relative mb-4 overflow-hidden rounded-[24px] border border-amber-500/18 bg-[linear-gradient(180deg,rgba(254,243,199,0.9),rgba(255,255,255,0.92))] px-4 py-4 dark:border-amber-200/12 dark:bg-[linear-gradient(180deg,rgba(245,158,11,0.18),rgba(0,0,0,0.84))]">
                         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.22),transparent_58%)] dark:bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.18),transparent_58%)]" />
                         <div className="pointer-events-none absolute inset-x-10 bottom-0 h-20 rounded-full bg-amber-300/28 blur-2xl dark:bg-amber-300/18" />
-                        <div className="mb-4 flex items-center justify-between text-[10px] tracking-[0.18em] text-neutral-600 uppercase dark:text-amber-100/72">
+                        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-[10px] tracking-[0.18em] text-neutral-600 uppercase dark:text-amber-100/72">
                           <span>Forecast depth</span>
-                          <span>6 segments live</span>
+                          <span>4 quarters mapped</span>
                         </div>
-                        <div className="relative h-36 rounded-[20px] border border-amber-500/14 bg-white/72 px-4 pt-5 pb-8 dark:border-amber-100/10 dark:bg-black/36">
+                        <div className="relative h-40 rounded-[20px] border border-amber-500/14 bg-white/72 px-3 pt-4 pb-6 sm:h-44 sm:px-4 sm:pt-5 sm:pb-7 dark:border-amber-100/10 dark:bg-black/36">
                           <div className="pointer-events-none absolute inset-x-4 top-5 grid gap-4">
                             {[0, 1, 2, 3].map((row) => (
                               <div
                                 key={row}
-                                className="border-t border-dashed border-amber-900/10 dark:border-amber-100/12"
+                                className="border-t border-dashed border-amber-900/10 dark:border-white/14"
                               />
                             ))}
                           </div>
@@ -337,9 +296,9 @@ export function Hero() {
                             viewBox="0 0 300 160"
                           >
                             <motion.path
-                              d="M12 116 C 46 88, 76 94, 110 70 S 178 40, 212 56 S 258 18, 288 28"
+                              className="stroke-neutral-900/70 dark:stroke-white/80"
+                              d="M18 118 C 52 92, 82 98, 112 76 S 182 46, 214 54 S 258 28, 286 24"
                               fill="none"
-                              stroke="rgba(17,24,39,0.76)"
                               strokeDasharray="6 8"
                               strokeLinecap="round"
                               strokeWidth="3"
@@ -444,8 +403,8 @@ export function Hero() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid gap-4 border-t border-black/8 bg-neutral-950 px-5 py-6 text-white sm:px-6 sm:py-7 dark:border-white/10 dark:bg-neutral-950">
-                    <div className="flex items-center justify-between">
+                  <div className="grid gap-3 border-t border-black/8 bg-neutral-950 px-5 py-5 text-white sm:px-6 sm:py-6 dark:border-white/10 dark:bg-neutral-950">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2 text-xs text-white/70 sm:text-sm">
                         <BotMessageSquare className="size-4" />
                         Review queue
@@ -455,30 +414,21 @@ export function Hero() {
                       </p>
                     </div>
 
-                    <div className="space-y-2.5 sm:space-y-3">
-                      {[
-                        "Marketing scenario unlocked after spend guardrail approval.",
-                        "Hiring plan flagged because pipeline assumptions slipped two weeks.",
-                        "Board pack refresh ready with variance notes attached to each driver.",
-                      ].map((item) => (
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {reviewQueueItems.map((item) => (
                         <div
                           key={item}
-                          className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs leading-6 text-white/82 sm:px-4 sm:text-sm"
+                          className="h-full rounded-[22px] border border-white/10 bg-white/6 px-3 py-3 text-xs leading-6 text-white/82 sm:px-4 sm:text-sm"
                         >
                           {item}
                         </div>
                       ))}
                     </div>
-
-                    <div className="rounded-2xl border border-white/12 bg-white/8 px-3 py-2.5 text-xs text-white/86 sm:px-4 sm:text-sm">
-                      Model health is stable. 98.4% of workbook checks passed
-                      during the latest sync.
-                    </div>
                   </div>
                 </CardContent>
-              </motion.div>
+              </div>
             </Card>
-          </motion.div>
+          </div>
         </MotionReveal>
       </div>
 

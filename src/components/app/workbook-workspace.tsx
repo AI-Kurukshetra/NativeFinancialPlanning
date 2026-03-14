@@ -16,7 +16,13 @@ import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import type { WorkbookDetailItem } from "@/lib/server/app-data";
 import type { UserRole } from "@/lib/types";
@@ -74,7 +80,9 @@ export function WorkbookWorkspace({
   });
   const [isEditingWorkbook, setIsEditingWorkbook] = useState(false);
   const [newWorksheetName, setNewWorksheetName] = useState("");
-  const [renamingWorksheetId, setRenamingWorksheetId] = useState<string | null>(null);
+  const [renamingWorksheetId, setRenamingWorksheetId] = useState<string | null>(
+    null,
+  );
   const [worksheetRenameValue, setWorksheetRenameValue] = useState("");
 
   const canEditWorkbook =
@@ -93,7 +101,9 @@ export function WorkbookWorkspace({
   }, [workbook.description, workbook.name, workbook.status]);
 
   const selectedWorksheet =
-    workbook.worksheets.find((worksheet) => worksheet.id === selectedWorksheetId) ??
+    workbook.worksheets.find(
+      (worksheet) => worksheet.id === selectedWorksheetId,
+    ) ??
     workbook.worksheets[0] ??
     null;
 
@@ -119,11 +129,17 @@ export function WorkbookWorkspace({
 
   const rowCount = Math.max(
     12,
-    selectedWorksheet?.cells.reduce((current, cell) => Math.max(current, cell.row_index), 0) ?? 0,
+    selectedWorksheet?.cells.reduce(
+      (current, cell) => Math.max(current, cell.row_index),
+      0,
+    ) ?? 0,
   );
   const columnCount = Math.max(
     8,
-    selectedWorksheet?.cells.reduce((current, cell) => Math.max(current, cell.column_index), 0) ?? 0,
+    selectedWorksheet?.cells.reduce(
+      (current, cell) => Math.max(current, cell.column_index),
+      0,
+    ) ?? 0,
   );
 
   const selectedCellLabel = selectedCell
@@ -316,7 +332,11 @@ export function WorkbookWorkspace({
     toast.success("Comment deleted.");
   }
 
-  async function persistCell(rowIndex: number, columnIndex: number, value: string) {
+  async function persistCell(
+    rowIndex: number,
+    columnIndex: number,
+    value: string,
+  ) {
     if (!selectedWorksheet) {
       return;
     }
@@ -379,11 +399,19 @@ export function WorkbookWorkspace({
       return;
     }
 
-    await persistCell(selectedCell.rowIndex, selectedCell.columnIndex, formulaValue);
+    await persistCell(
+      selectedCell.rowIndex,
+      selectedCell.columnIndex,
+      formulaValue,
+    );
   }
 
   async function createComment() {
-    if (!selectedWorksheet || !selectedCell || commentBody.trim().length === 0) {
+    if (
+      !selectedWorksheet ||
+      !selectedCell ||
+      commentBody.trim().length === 0
+    ) {
       toast.error("Select a cell and enter a comment.");
       return;
     }
@@ -493,15 +521,16 @@ export function WorkbookWorkspace({
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[1.55fr_0.95fr]">
-      <div className="space-y-6">
+    <div className="grid gap-6 2xl:grid-cols-[minmax(0,1.42fr)_minmax(26rem,1fr)]">
+      <div className="grid gap-6 xl:grid-cols-2 2xl:grid-cols-1">
         <Card>
           <CardHeader>
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div className="space-y-2">
                 <CardTitle>Workbook control room</CardTitle>
                 <CardDescription>
-                  Edit workbook metadata, manage worksheets, and drive updates from one place.
+                  Edit workbook metadata, manage worksheets, and drive updates
+                  from one place.
                 </CardDescription>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -516,7 +545,9 @@ export function WorkbookWorkspace({
                 >
                   {workbook.status.replace("_", " ")}
                 </Badge>
-                <Badge variant="secondary">{workbook.collaborators} collaborators</Badge>
+                <Badge variant="secondary">
+                  {workbook.collaborators} collaborators
+                </Badge>
               </div>
             </div>
           </CardHeader>
@@ -525,7 +556,9 @@ export function WorkbookWorkspace({
               <div className="grid gap-4 lg:grid-cols-[1fr_220px]">
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-800">Workbook name</label>
+                    <label className="text-sm font-medium text-slate-800">
+                      Workbook name
+                    </label>
                     <Input
                       onChange={(event) =>
                         setWorkbookDraft((current) => ({
@@ -537,9 +570,11 @@ export function WorkbookWorkspace({
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-800">Description</label>
+                    <label className="text-sm font-medium text-slate-800">
+                      Description
+                    </label>
                     <textarea
-                      className="min-h-28 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-3 text-sm text-slate-950 shadow-sm outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-primary"
+                      className="focus-visible:ring-primary min-h-28 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-3 text-sm text-slate-950 shadow-sm outline-none placeholder:text-slate-400 focus-visible:ring-2"
                       onChange={(event) =>
                         setWorkbookDraft((current) => ({
                           ...current,
@@ -552,13 +587,16 @@ export function WorkbookWorkspace({
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-800">Status</label>
+                    <label className="text-sm font-medium text-slate-800">
+                      Status
+                    </label>
                     <select
-                      className="flex h-11 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-2 text-sm text-slate-950 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      className="focus-visible:ring-primary flex h-11 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-2 text-sm text-slate-950 shadow-sm outline-none focus-visible:ring-2"
                       onChange={(event) =>
                         setWorkbookDraft((current) => ({
                           ...current,
-                          status: event.target.value as WorkbookDetailItem["status"],
+                          status: event.target
+                            .value as WorkbookDetailItem["status"],
                         }))
                       }
                       value={workbookDraft.status}
@@ -599,11 +637,14 @@ export function WorkbookWorkspace({
             ) : (
               <div className="grid gap-4 lg:grid-cols-[1fr_220px]">
                 <div className="space-y-2">
-                  <p className="text-2xl font-semibold text-slate-950">{workbook.name}</p>
-                  <p className="text-sm text-slate-600">
-                    {workbook.description || "No workbook description added yet."}
+                  <p className="text-2xl font-semibold text-slate-950">
+                    {workbook.name}
                   </p>
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                  <p className="text-sm text-slate-600">
+                    {workbook.description ||
+                      "No workbook description added yet."}
+                  </p>
+                  <p className="text-xs tracking-[0.18em] text-slate-500 uppercase">
                     Owned by {workbook.owner} · Updated{" "}
                     {new Date(workbook.updatedAt).toLocaleString("en-US")}
                   </p>
@@ -625,7 +666,9 @@ export function WorkbookWorkspace({
 
             <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
               <div className="rounded-[26px] bg-slate-50/90 p-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Formula bar</p>
+                <p className="text-xs tracking-[0.2em] text-slate-500 uppercase">
+                  Formula bar
+                </p>
                 <div className="mt-3 flex flex-col gap-3 md:flex-row">
                   <div className="flex h-11 min-w-24 items-center justify-center rounded-2xl border border-black/10 bg-white px-4 text-sm font-medium text-slate-950">
                     {selectedCellLabel}
@@ -662,11 +705,15 @@ export function WorkbookWorkspace({
               </div>
 
               <div className="rounded-[26px] bg-slate-50/90 p-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Active cell</p>
+                <p className="text-xs tracking-[0.2em] text-slate-500 uppercase">
+                  Active cell
+                </p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl bg-white px-4 py-3">
                     <p className="text-xs text-slate-500">Selection</p>
-                    <p className="mt-2 font-semibold text-slate-950">{selectedCellLabel}</p>
+                    <p className="mt-2 font-semibold text-slate-950">
+                      {selectedCellLabel}
+                    </p>
                   </div>
                   <div className="rounded-2xl bg-white px-4 py-3">
                     <p className="text-xs text-slate-500">Comments</p>
@@ -676,7 +723,9 @@ export function WorkbookWorkspace({
                   </div>
                   <div className="rounded-2xl bg-white px-4 py-3">
                     <p className="text-xs text-slate-500">Snapshots</p>
-                    <p className="mt-2 font-semibold text-slate-950">{workbook.versions.length}</p>
+                    <p className="mt-2 font-semibold text-slate-950">
+                      {workbook.versions.length}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -690,7 +739,8 @@ export function WorkbookWorkspace({
               <div>
                 <CardTitle>Spreadsheet workspace</CardTitle>
                 <CardDescription>
-                  Switch worksheets, edit cells directly, and keep formulas preserved.
+                  Switch worksheets, edit cells directly, and keep formulas
+                  preserved.
                 </CardDescription>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -725,7 +775,9 @@ export function WorkbookWorkspace({
             <div className="flex flex-wrap gap-2">
               {workbook.worksheets.map((worksheet) => {
                 const worksheetCommentCount = workbook.comments.filter(
-                  (comment) => comment.worksheet_id === worksheet.id && !comment.resolved_at,
+                  (comment) =>
+                    comment.worksheet_id === worksheet.id &&
+                    !comment.resolved_at,
                 ).length;
 
                 return (
@@ -763,7 +815,9 @@ export function WorkbookWorkspace({
               <div className="grid gap-4 rounded-[24px] bg-slate-50/90 p-4 lg:grid-cols-[1fr_auto]">
                 <div className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
                   <Input
-                    onChange={(event) => setNewWorksheetName(event.target.value)}
+                    onChange={(event) =>
+                      setNewWorksheetName(event.target.value)
+                    }
                     placeholder="New worksheet name"
                     value={newWorksheetName}
                   />
@@ -792,7 +846,9 @@ export function WorkbookWorkspace({
                     {renamingWorksheetId === selectedWorksheet.id ? (
                       <>
                         <Input
-                          onChange={(event) => setWorksheetRenameValue(event.target.value)}
+                          onChange={(event) =>
+                            setWorksheetRenameValue(event.target.value)
+                          }
                           value={worksheetRenameValue}
                         />
                         <Button
@@ -829,12 +885,12 @@ export function WorkbookWorkspace({
                     gridTemplateColumns: `88px repeat(${columnCount}, minmax(132px, 1fr))`,
                   }}
                 >
-                  <div className="bg-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  <div className="bg-slate-100 px-4 py-3 text-xs font-semibold tracking-[0.18em] text-slate-500 uppercase">
                     Row
                   </div>
                   {Array.from({ length: columnCount }, (_, columnIndex) => (
                     <div
-                      className="bg-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500"
+                      className="bg-slate-100 px-4 py-3 text-xs font-semibold tracking-[0.18em] text-slate-500 uppercase"
                       key={`header-${columnIndex + 1}`}
                     >
                       {getColumnLabel(columnIndex + 1)}
@@ -887,15 +943,21 @@ export function WorkbookWorkspace({
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="rounded-[24px] bg-white/75 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Worksheet</p>
+              <p className="text-xs tracking-[0.2em] text-slate-500 uppercase">
+                Worksheet
+              </p>
               <p className="mt-2 text-lg font-semibold text-slate-950">
                 {selectedWorksheet?.name ?? "No worksheet selected"}
               </p>
             </div>
             <div className="rounded-[24px] bg-white/75 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Selected cell</p>
-              <p className="mt-2 text-lg font-semibold text-slate-950">{selectedCellLabel}</p>
-              <p className="mt-2 break-all text-sm text-slate-600">
+              <p className="text-xs tracking-[0.2em] text-slate-500 uppercase">
+                Selected cell
+              </p>
+              <p className="mt-2 text-lg font-semibold text-slate-950">
+                {selectedCellLabel}
+              </p>
+              <p className="mt-2 text-sm break-all text-slate-600">
                 {formulaValue || "No value in the selected cell yet."}
               </p>
             </div>
@@ -924,14 +986,16 @@ export function WorkbookWorkspace({
           </CardHeader>
           <CardContent className="space-y-4">
             <textarea
-              className="min-h-28 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-3 text-sm text-slate-950 shadow-sm outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-primary"
+              className="focus-visible:ring-primary min-h-28 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-3 text-sm text-slate-950 shadow-sm outline-none placeholder:text-slate-400 focus-visible:ring-2"
               onChange={(event) => setCommentBody(event.target.value)}
               placeholder="Explain the assumption, open question, or review note."
               value={commentBody}
             />
             <Button
               className="w-full"
-              disabled={!selectedCell || commentBody.trim().length === 0 || isPending}
+              disabled={
+                !selectedCell || commentBody.trim().length === 0 || isPending
+              }
               leftIcon={<MessageSquare className="size-4" />}
               onClick={() => void createComment()}
               variant="secondary"
@@ -941,17 +1005,25 @@ export function WorkbookWorkspace({
 
             <div className="space-y-3">
               {filteredComments.length === 0 ? (
-                <p className="text-sm text-slate-500">No comments for the current selection.</p>
+                <p className="text-sm text-slate-500">
+                  No comments for the current selection.
+                </p>
               ) : (
                 filteredComments.map((comment) => {
                   const canManageComment =
-                    comment.author_id === currentUserId || currentUserRole === "admin";
+                    comment.author_id === currentUserId ||
+                    currentUserRole === "admin";
 
                   return (
-                    <div className="rounded-2xl bg-white/75 p-4" key={comment.id}>
+                    <div
+                      className="rounded-2xl bg-white/75 p-4"
+                      key={comment.id}
+                    >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-sm font-medium text-slate-950">{comment.body}</p>
+                          <p className="text-sm font-medium text-slate-950">
+                            {comment.body}
+                          </p>
                           <p className="mt-2 text-xs text-slate-500">
                             {comment.row_index && comment.column_index
                               ? `R${comment.row_index} · ${getColumnLabel(comment.column_index)}`
@@ -969,7 +1041,9 @@ export function WorkbookWorkspace({
                               void updateComment(
                                 comment.id,
                                 { resolved: !comment.resolved_at },
-                                comment.resolved_at ? "Comment reopened." : "Comment resolved.",
+                                comment.resolved_at
+                                  ? "Comment reopened."
+                                  : "Comment resolved.",
                               )
                             }
                             size="sm"
@@ -995,29 +1069,48 @@ export function WorkbookWorkspace({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="xl:col-span-2 2xl:col-span-1">
           <CardHeader>
             <CardTitle>Version history</CardTitle>
             <CardDescription>
-              Restore the workbook to any saved snapshot and review the checkpoint timeline.
+              Restore the workbook to any saved snapshot and review the
+              checkpoint timeline.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-[24px] bg-white/75 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Snapshots</p>
-                <p className="mt-3 text-2xl font-semibold text-slate-950">{workbook.versions.length}</p>
-                <p className="mt-2 text-sm text-slate-600">Recovery points stored for this workbook.</p>
+                <p className="text-xs tracking-[0.18em] text-slate-500 uppercase">
+                  Snapshots
+                </p>
+                <p className="mt-3 text-2xl font-semibold text-slate-950">
+                  {workbook.versions.length}
+                </p>
+                <p className="mt-2 text-sm text-slate-600">
+                  Recovery points stored for this workbook.
+                </p>
               </div>
               <div className="rounded-[24px] bg-white/75 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Comments</p>
-                <p className="mt-3 text-2xl font-semibold text-slate-950">{workbook.comments.length}</p>
-                <p className="mt-2 text-sm text-slate-600">Review context alongside versions.</p>
+                <p className="text-xs tracking-[0.18em] text-slate-500 uppercase">
+                  Comments
+                </p>
+                <p className="mt-3 text-2xl font-semibold text-slate-950">
+                  {workbook.comments.length}
+                </p>
+                <p className="mt-2 text-sm text-slate-600">
+                  Review context alongside versions.
+                </p>
               </div>
               <div className="rounded-[24px] bg-white/75 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Worksheets</p>
-                <p className="mt-3 text-2xl font-semibold text-slate-950">{workbook.worksheets.length}</p>
-                <p className="mt-2 text-sm text-slate-600">Model structure captured in the current book.</p>
+                <p className="text-xs tracking-[0.18em] text-slate-500 uppercase">
+                  Worksheets
+                </p>
+                <p className="mt-3 text-2xl font-semibold text-slate-950">
+                  {workbook.worksheets.length}
+                </p>
+                <p className="mt-2 text-sm text-slate-600">
+                  Model structure captured in the current book.
+                </p>
               </div>
             </div>
 
@@ -1030,7 +1123,9 @@ export function WorkbookWorkspace({
                   const hoursSinceVersion = Math.max(
                     1,
                     Math.round(
-                      Math.abs(Date.now() - new Date(version.created_at).getTime()) / 36e5,
+                      Math.abs(
+                        Date.now() - new Date(version.created_at).getTime(),
+                      ) / 36e5,
                     ),
                   );
 
@@ -1040,24 +1135,31 @@ export function WorkbookWorkspace({
                       key={version.id}
                     >
                       {index < workbook.versions.length - 1 ? (
-                        <div className="absolute bottom-[-20px] left-8 top-[72px] w-px bg-slate-200" />
+                        <div className="absolute top-[72px] bottom-[-20px] left-8 w-px bg-slate-200" />
                       ) : null}
                       <div className="flex items-start gap-4">
                         <div className="relative z-10 mt-1 flex size-9 items-center justify-center rounded-full bg-slate-950 text-xs font-semibold text-white">
                           {workbook.versions.length - index}
                         </div>
-                        <div className="flex-1">
-                          <div className="flex flex-wrap items-center justify-between gap-3">
-                            <div>
+                        <div className="min-w-0 flex-1 space-y-4">
+                          <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                            <div className="min-w-0">
                               <div className="flex flex-wrap items-center gap-2">
-                                <p className="text-sm font-medium text-slate-950">{version.label}</p>
-                                {isLatest ? <Badge variant="gradient">Latest</Badge> : null}
+                                <p className="text-sm font-medium text-slate-950">
+                                  {version.label}
+                                </p>
+                                {isLatest ? (
+                                  <Badge variant="gradient">Latest</Badge>
+                                ) : null}
                               </div>
-                              <p className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
-                                {new Date(version.created_at).toLocaleString("en-US")}
+                              <p className="mt-2 text-xs tracking-[0.18em] text-slate-500 uppercase">
+                                {new Date(version.created_at).toLocaleString(
+                                  "en-US",
+                                )}
                               </p>
                             </div>
                             <Button
+                              className="w-full lg:w-auto"
                               leftIcon={<RotateCcw className="size-4" />}
                               onClick={() => void restoreVersion(version.id)}
                               size="sm"
@@ -1067,21 +1169,27 @@ export function WorkbookWorkspace({
                             </Button>
                           </div>
 
-                          <div className="mt-4 grid gap-3 md:grid-cols-3">
+                          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                             <div className="rounded-[20px] bg-slate-50/90 p-3">
-                              <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Age</p>
+                              <p className="text-xs tracking-[0.16em] text-slate-500 uppercase">
+                                Age
+                              </p>
                               <p className="mt-2 text-sm font-medium text-slate-950">
                                 {hoursSinceVersion}h from current
                               </p>
                             </div>
                             <div className="rounded-[20px] bg-slate-50/90 p-3">
-                              <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Scope</p>
+                              <p className="text-xs tracking-[0.16em] text-slate-500 uppercase">
+                                Scope
+                              </p>
                               <p className="mt-2 text-sm font-medium text-slate-950">
                                 {workbook.worksheets.length} sheets captured
                               </p>
                             </div>
                             <div className="rounded-[20px] bg-slate-50/90 p-3">
-                              <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Review context</p>
+                              <p className="text-xs tracking-[0.16em] text-slate-500 uppercase">
+                                Review context
+                              </p>
                               <p className="mt-2 text-sm font-medium text-slate-950">
                                 {workbook.comments.length} comments available
                               </p>
@@ -1122,7 +1230,9 @@ function FragmentRow({
 }) {
   return (
     <>
-      <div className="bg-slate-100 px-4 py-3 text-sm font-medium text-slate-500">{rowIndex}</div>
+      <div className="bg-slate-100 px-4 py-3 text-sm font-medium text-slate-500">
+        {rowIndex}
+      </div>
       {Array.from({ length: columnCount }, (_, columnOffset) => {
         const columnIndex = columnOffset + 1;
         const key = getCellKey(rowIndex, columnIndex);

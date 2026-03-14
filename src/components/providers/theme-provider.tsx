@@ -2,9 +2,9 @@
 
 import {
   createContext,
-  startTransition,
   useContext,
   useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -26,10 +26,6 @@ const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
   undefined,
 );
 
-type ViewTransitionDocument = Document & {
-  startViewTransition?: (update: () => void) => void;
-};
-
 function resolveTheme(defaultTheme: Theme, storageKey: string): Theme {
   if (typeof window === "undefined") {
     return defaultTheme;
@@ -49,6 +45,14 @@ function resolveTheme(defaultTheme: Theme, storageKey: string): Theme {
   return stored === "dark" || stored === "light" ? stored : defaultTheme;
 }
 
+function applyTheme(theme: Theme, storageKey: string) {
+  const root = document.documentElement;
+  root.classList.remove("light", "dark");
+  root.classList.add(theme);
+  root.style.colorScheme = theme;
+  window.localStorage.setItem(storageKey, theme);
+}
+
 export function ThemeProvider({
   children,
   defaultTheme = "light",
@@ -57,37 +61,39 @@ export function ThemeProvider({
   const [theme, setThemeState] = useState<Theme>(() =>
     resolveTheme(defaultTheme, storageKey),
   );
+  const resetThemeSwitchRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove("light", "dark");
-    root.classList.add(theme);
-    root.style.colorScheme = theme;
-    window.localStorage.setItem(storageKey, theme);
+    applyTheme(theme, storageKey);
   }, [storageKey, theme]);
+
+  useEffect(
+    () => () => {
+      if (resetThemeSwitchRef.current !== null) {
+        window.clearTimeout(resetThemeSwitchRef.current);
+      }
+    },
+    [],
+  );
 
   const setTheme = (nextTheme: Theme) => {
     if (nextTheme === theme) {
       return;
     }
 
-    const updateTheme = () => {
-      startTransition(() => {
-        setThemeState(nextTheme);
-      });
-    };
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    applyTheme(nextTheme, storageKey);
+    setThemeState(nextTheme);
 
-    const supportsMotion =
-      typeof window !== "undefined" &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const documentWithTransition = document as ViewTransitionDocument;
-
-    if (supportsMotion && documentWithTransition.startViewTransition) {
-      documentWithTransition.startViewTransition(updateTheme);
-      return;
+    if (resetThemeSwitchRef.current !== null) {
+      window.clearTimeout(resetThemeSwitchRef.current);
     }
 
-    updateTheme();
+    resetThemeSwitchRef.current = window.setTimeout(() => {
+      root.classList.remove("theme-switching");
+      resetThemeSwitchRef.current = null;
+    }, 120);
   };
 
   const value = {
@@ -111,5 +117,3 @@ export const useTheme = () => {
 
   return context;
 };
-
-export { ThemeProviderContext };

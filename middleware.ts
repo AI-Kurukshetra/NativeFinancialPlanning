@@ -7,6 +7,22 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/workbooks/:path*", "/budgets/:path*", "/reports/:path*"],
+  matcher: [
+    "/analytics/:path*",
+    "/budgets/:path*",
+    "/currencies/:path*",
+    "/dashboard/:path*",
+    "/forecasts/:path*",
+    "/integrations/:path*",
+    "/login/:path*",
+    "/modeling/:path*",
+    "/notifications/:path*",
+    "/reports/:path*",
+    "/search/:path*",
+    "/signup/:path*",
+    "/templates/:path*",
+    "/workbooks/:path*",
+    "/workflows/:path*",
+    "/workspace/:path*",
+  ],
 };
-

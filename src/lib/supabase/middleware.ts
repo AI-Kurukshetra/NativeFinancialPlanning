@@ -3,7 +3,28 @@ import { createServerClient, type SetAllCookies } from "@supabase/ssr";
 
 import { hasSupabaseEnv, publicEnv } from "@/lib/env";
 
-const PROTECTED_PREFIXES = ["/dashboard", "/workbooks", "/budgets", "/reports"];
+export const SESSION_REFRESH_PATHS = [
+  "/analytics",
+  "/budgets",
+  "/currencies",
+  "/dashboard",
+  "/forecasts",
+  "/integrations",
+  "/login",
+  "/modeling",
+  "/notifications",
+  "/reports",
+  "/search",
+  "/signup",
+  "/templates",
+  "/workbooks",
+  "/workflows",
+  "/workspace",
+] as const;
+
+const PROTECTED_PREFIXES = SESSION_REFRESH_PATHS.filter(
+  (pathname) => pathname !== "/login" && pathname !== "/signup",
+);
 
 export async function updateSession(request: NextRequest) {
   const response = NextResponse.next({ request });
