@@ -60,6 +60,18 @@ The result is a **finance operating system** that feels familiar but behaves lik
 
 ---
 
+## Screenshots
+
+### Landing Page
+
+![Landing Page - Light Theme](media/Landing_Page_Light_Theme.png)
+*Landing page with light theme showcasing the modern, clean interface*
+
+![Landing Page - Dark Theme](media/Landing_Page_Dark_Them_With_USP_Features.png)
+*Landing page with dark theme highlighting key USP features*
+
+---
+
 ## Architecture
 
 ### System Architecture
@@ -471,6 +483,9 @@ flowchart TB
 | **Multi-Organization Support** | Users can belong to multiple organizations with distinct roles and permissions |
 | **Workspace Context** | Sidebar displays active workspace, organization name, user profile, and membership role |
 
+![Workbook Interface](media/Notebook_UI.png)
+*Spreadsheet-native workbook interface with worksheet tabs and cell-level editing*
+
 ### Financial Planning
 
 | Module | Capabilities |
@@ -671,6 +686,9 @@ The dashboard is the central hub of Native FP&A, providing executive visibility 
 │  └────────────────────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────────────────┘
 ```
+
+![Dashboard Interface](media/Dashboard_UI.png)
+*Executive dashboard with KPI metrics, finance command center, and execution radar*
 
 ### Dashboard Components
 

@@ -73,3 +73,6 @@ tsconfig.tsbuildinfo
 # AI Assistants
 .qwen/
 .codex/
+
+# Local demo/video artifacts
+artifacts/
