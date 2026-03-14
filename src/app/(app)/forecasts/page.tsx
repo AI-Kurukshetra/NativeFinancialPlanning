@@ -10,24 +10,28 @@ export default async function ForecastsPage() {
   return (
     <div className="space-y-6">
       <AppTopbar title="Forecasts" subtitle="Rolling outlooks, scenario windows, and confidence tracking" />
-      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle>Create forecast</CardTitle>
+      <div className="grid min-h-[600px] auto-rows-fr gap-6 lg:grid-cols-2">
+        <Card className="overflow-hidden">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl">Create forecast</CardTitle>
             <CardDescription>Spin up a rolling forecast attached to a workbook and planning horizon.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-1">
             <PlanningCreateForm endpoint="/api/forecasts" extraFields="forecast" submitLabel="Create forecast" title="Forecast" workbookOptions={workbooks} />
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="pt-6">
+        <Card className="overflow-hidden">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl">Forecast register</CardTitle>
+            <CardDescription>Current forecast structures in the active workspace, with inline edit and delete support.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-1 overflow-y-auto max-h-[800px]">
             <PlanningRegister
-              description="Current forecast structures in the active workspace, with inline edit and delete support."
+              description=""
               items={items}
               kind="forecast"
-              title="Forecast register"
+              title=""
             />
           </CardContent>
         </Card>

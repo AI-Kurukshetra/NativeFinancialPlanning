@@ -7,14 +7,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl text-sm font-medium transition-[transform,background-color,border-color,box-shadow,color] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 ring-offset-background active:scale-[0.99]",
+  "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl text-sm font-medium transition-[transform,background-color,border-color,box-shadow,color] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 ring-offset-background active:scale-[0.99] [&>*]:relative [&>*]:z-10 [&>*]:text-inherit [&_svg]:text-inherit",
   {
     variants: {
       variant: {
         primary:
-          "border border-black bg-black text-white shadow-[0_18px_40px_rgba(0,0,0,0.18)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/18 before:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_58%)] after:content-[''] hover:-translate-y-0.5 hover:bg-neutral-900 hover:shadow-[0_22px_52px_rgba(0,0,0,0.24)] dark:border-white dark:bg-white dark:text-black dark:before:bg-black/10 dark:after:bg-[radial-gradient(circle_at_top,rgba(0,0,0,0.08),transparent_58%)] dark:hover:bg-neutral-100",
+          "border border-amber-300/70 bg-[linear-gradient(135deg,#fde68a,#f59e0b)] text-black shadow-[0_18px_40px_rgba(245,158,11,0.24)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/30 before:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_58%)] after:content-[''] hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#fef3c7,#f59e0b)] hover:shadow-[0_22px_52px_rgba(245,158,11,0.28)] dark:border-amber-200/40 dark:bg-[linear-gradient(135deg,#fde68a,#f59e0b)] dark:text-black dark:before:bg-white/26 dark:after:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_58%)] dark:hover:bg-[linear-gradient(135deg,#fef3c7,#f59e0b)]",
         default:
-          "border border-black bg-black text-white shadow-[0_16px_36px_rgba(0,0,0,0.16)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/20 before:content-[''] hover:-translate-y-0.5 hover:bg-neutral-900 hover:shadow-[0_20px_44px_rgba(0,0,0,0.2)] dark:border-white dark:bg-white dark:text-black dark:before:bg-black/12 dark:hover:bg-neutral-100",
+          "border border-amber-300/60 bg-[linear-gradient(135deg,#fef3c7,#fbbf24)] text-black shadow-[0_16px_36px_rgba(245,158,11,0.18)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/30 before:content-[''] hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#fef3c7,#f59e0b)] hover:shadow-[0_20px_44px_rgba(245,158,11,0.22)] dark:border-amber-200/40 dark:bg-[linear-gradient(135deg,#fef3c7,#fbbf24)] dark:text-black dark:before:bg-white/24 dark:hover:bg-[linear-gradient(135deg,#fef3c7,#f59e0b)]",
         secondary:
           "border border-black/10 bg-neutral-100 text-black shadow-[0_10px_24px_rgba(0,0,0,0.05)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/60 before:content-[''] hover:-translate-y-0.5 hover:border-black/18 hover:bg-neutral-200 dark:border-white/12 dark:bg-neutral-900 dark:text-white dark:before:bg-white/10 dark:hover:bg-neutral-800",
         ghost:
@@ -39,7 +39,8 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
@@ -61,7 +62,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : "button";
     const isDisabled = disabled || loading;
@@ -92,7 +93,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : null}
         {loading && (
           <svg
-            className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 animate-spin"
+            className="absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2 animate-spin"
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -112,14 +113,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </svg>
         )}
 
-        <span className={cn("relative z-10 flex items-center gap-2", loading ? "invisible" : "")}>
+        <span
+          className={cn(
+            "relative z-10 flex items-center gap-2",
+            loading ? "invisible" : "",
+          )}
+        >
           {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
           {children}
           {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
         </span>
       </Comp>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

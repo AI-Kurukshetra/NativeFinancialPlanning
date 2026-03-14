@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  startTransition,
   useContext,
   useEffect,
   useState,
@@ -22,44 +23,76 @@ type ThemeProviderState = {
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
-  undefined
+  undefined,
 );
+
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (update: () => void) => void;
+};
+
+function resolveTheme(defaultTheme: Theme, storageKey: string): Theme {
+  if (typeof window === "undefined") {
+    return defaultTheme;
+  }
+
+  const root = document.documentElement;
+
+  if (root.classList.contains("dark")) {
+    return "dark";
+  }
+
+  if (root.classList.contains("light")) {
+    return "light";
+  }
+
+  const stored = window.localStorage.getItem(storageKey);
+  return stored === "dark" || stored === "light" ? stored : defaultTheme;
+}
 
 export function ThemeProvider({
   children,
   defaultTheme = "light",
   storageKey = "native-fpa-theme",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [theme, setThemeState] = useState<Theme>(() =>
+    resolveTheme(defaultTheme, storageKey),
+  );
 
-  // Initialize theme from localStorage or system preference
   useEffect(() => {
-    const stored = localStorage.getItem(storageKey) as Theme | null;
-
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-    } else {
-      setTheme(defaultTheme);
-    }
-
-    setIsLoaded(true);
-  }, [defaultTheme, storageKey]);
-
-  // Apply theme to document
-  useEffect(() => {
-    if (!isLoaded) return;
-
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
     root.style.colorScheme = theme;
-    localStorage.setItem(storageKey, theme);
-  }, [theme, storageKey, isLoaded]);
+    window.localStorage.setItem(storageKey, theme);
+  }, [storageKey, theme]);
+
+  const setTheme = (nextTheme: Theme) => {
+    if (nextTheme === theme) {
+      return;
+    }
+
+    const updateTheme = () => {
+      startTransition(() => {
+        setThemeState(nextTheme);
+      });
+    };
+
+    const supportsMotion =
+      typeof window !== "undefined" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const documentWithTransition = document as ViewTransitionDocument;
+
+    if (supportsMotion && documentWithTransition.startViewTransition) {
+      documentWithTransition.startViewTransition(updateTheme);
+      return;
+    }
+
+    updateTheme();
+  };
 
   const value = {
     theme,
-    setTheme: (newTheme: Theme) => setTheme(newTheme),
+    setTheme,
   };
 
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Pencil, Save, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -234,7 +235,12 @@ export function PlanningRegister(props: PlanningRegisterProps) {
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-medium text-slate-950">{item.name}</p>
+                      <Link
+                        className="font-medium text-slate-950 transition hover:text-primary"
+                        href={props.kind === "budget" ? `/budgets/${item.id}` : `/forecasts/${item.id}`}
+                      >
+                        {item.name}
+                      </Link>
                       <Badge variant={getBadgeVariant(item.status)}>{item.status}</Badge>
                     </div>
                     <p className="mt-2 text-sm text-slate-600">
@@ -252,6 +258,11 @@ export function PlanningRegister(props: PlanningRegisterProps) {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={props.kind === "budget" ? `/budgets/${item.id}` : `/forecasts/${item.id}`}>
+                        Open
+                      </Link>
+                    </Button>
                     <Button
                       leftIcon={<Pencil className="size-4" />}
                       onClick={() => beginEdit(item)}

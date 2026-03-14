@@ -13,7 +13,10 @@ import {
   Workflow,
 } from "lucide-react";
 
-import { MotionPresets, MotionReveal } from "@/components/marketing/motion-reveal";
+import {
+  MotionPresets,
+  MotionReveal,
+} from "@/components/marketing/motion-reveal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -97,13 +100,37 @@ const workflow = [
   },
 ];
 
-function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"] }) {
+const forecastColumns = [
+  { label: "Q1", committed: 38, revised: 46 },
+  { label: "Q2", committed: 52, revised: 62 },
+  { label: "Q3", committed: 60, revised: 74 },
+  { label: "Q4", committed: 68, revised: 86 },
+];
+
+const scenarioSignals = [
+  {
+    title: "Demand ramp",
+    value: "+12%",
+    note: "Expansion plan reopened after pipeline recovery.",
+  },
+  {
+    title: "Hiring plan",
+    value: "6 roles",
+    note: "Ops and finance approvals landed in the same cycle.",
+  },
+];
+
+function PlatformVisual({
+  panel,
+}: {
+  panel: (typeof bentoItems)[number]["panel"];
+}) {
   const prefersReducedMotion = useReducedMotion();
 
   if (panel === "chart") {
     return (
-      <div className="relative mt-4 flex min-h-[30rem] flex-1 flex-col overflow-hidden rounded-[26px] border border-black/8 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent)] p-6 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]">
-        <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
+      <div className="relative mt-4 flex min-h-[30rem] flex-1 flex-col rounded-[26px] border border-black/8 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent)] p-6 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]">
+        <div className="flex items-center justify-between text-[11px] tracking-[0.2em] text-neutral-500 uppercase dark:text-neutral-400">
           <span>Forecast scene</span>
           <span>Live model</span>
         </div>
@@ -124,92 +151,145 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
                 delay: index * 0.14,
               }}
             >
-              <p className="text-[10px] uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+              <p className="text-[10px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
                 {label}
               </p>
               <p className={cn("mt-2 text-2xl font-semibold", tone)}>{value}</p>
             </motion.div>
           ))}
         </div>
-        <div className="mt-4 grid flex-1 gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-          <div className="relative min-h-[19rem] overflow-hidden rounded-[24px] border border-black/8 bg-white/92 p-5 dark:border-white/10 dark:bg-black/88">
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.03),transparent_44%)] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_44%)]" />
-            <div className="pointer-events-none absolute inset-x-10 bottom-5 h-28 rounded-full bg-black/6 blur-3xl dark:bg-white/10" />
-            <div className="absolute inset-x-5 top-5 flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+        <div className="mt-4 grid flex-1 gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
+          <div className="min-w-0 rounded-[24px] border border-black/8 bg-white/92 p-5 dark:border-white/10 dark:bg-black/88">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-[10px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
               <span>Quarterly ladder</span>
               <span>Realtime revision</span>
             </div>
-            <div className="absolute inset-x-5 bottom-6 top-14 rounded-[20px] border border-black/6 dark:border-white/8" />
-            <div className="absolute inset-x-8 bottom-4 top-20 grid grid-rows-4">
-              {[0, 1, 2, 3].map((row) => (
-                <div key={row} className="border-t border-dashed border-black/8 dark:border-white/10" />
-              ))}
-            </div>
-            <div className="absolute inset-x-0 bottom-0 h-[78%] [perspective:1200px]">
-              <div className="relative mx-auto h-full w-full [transform-style:preserve-3d]">
-                <div className="absolute inset-x-10 bottom-3 h-36 rounded-[28px] border border-black/8 bg-white/94 [transform:rotateX(67deg)_rotateZ(-38deg)] shadow-[0_30px_56px_rgba(0,0,0,0.14)] dark:border-white/10 dark:bg-black/92 dark:shadow-[0_30px_56px_rgba(0,0,0,0.42)]" />
-                {[
-                  { left: "18%", height: "34%", delay: 0.04, tone: "bg-black dark:bg-white" },
-                  { left: "34%", height: "56%", delay: 0.12, tone: "bg-neutral-700 dark:bg-neutral-300" },
-                  { left: "50%", height: "74%", delay: 0.2, tone: "bg-black dark:bg-white" },
-                  { left: "66%", height: "92%", delay: 0.28, tone: "bg-neutral-700 dark:bg-neutral-300" },
-                ].map((bar, index) => (
+            <div className="relative mt-4 overflow-hidden rounded-[20px] border border-black/6 bg-[linear-gradient(180deg,rgba(0,0,0,0.03),transparent_48%)] px-4 pt-5 pb-6 dark:border-white/8 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_48%)]">
+              <div className="pointer-events-none absolute inset-x-4 top-5 grid gap-5">
+                {[0, 1, 2, 3].map((row) => (
                   <div
-                    key={bar.left}
-                    className="absolute bottom-11 w-14 [transform-style:preserve-3d]"
-                    style={{ left: bar.left }}
+                    key={row}
+                    className="border-t border-dashed border-black/8 dark:border-white/10"
+                  />
+                ))}
+              </div>
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full"
+                preserveAspectRatio="none"
+                viewBox="0 0 320 220"
+              >
+                <motion.path
+                  d="M24 162 C 72 138, 112 126, 154 102 S 232 70, 294 46"
+                  fill="none"
+                  stroke="rgba(17,24,39,0.72)"
+                  strokeDasharray="8 10"
+                  strokeLinecap="round"
+                  strokeWidth="4"
+                  animate={
+                    prefersReducedMotion
+                      ? undefined
+                      : { pathLength: [0.86, 1, 0.92, 1] }
+                  }
+                  transition={{
+                    duration: 4.8,
+                    ease: "easeInOut",
+                    repeat: Number.POSITIVE_INFINITY,
+                  }}
+                />
+              </svg>
+              <div className="relative z-10 grid min-h-[18rem] grid-cols-4 gap-3 sm:gap-4">
+                {forecastColumns.map((quarter, index) => (
+                  <div
+                    key={quarter.label}
+                    className="flex min-w-0 flex-col justify-end gap-3"
                   >
-                    <motion.div
-                      className="group relative animate-scale-in"
-                      animate={prefersReducedMotion ? undefined : { y: [0, -10, 0] }}
-                      transition={{
-                        duration: 3,
-                        ease: "easeInOut",
-                        repeat: Number.POSITIVE_INFINITY,
-                        delay: bar.delay,
-                      }}
-                    >
-                      <div
-                        className={cn(
-                          "w-14 rounded-t-[16px] shadow-[0_20px_28px_rgba(0,0,0,0.18)] transition-transform duration-300 group-hover:-translate-y-2",
-                          bar.tone,
-                        )}
-                        style={{ height: bar.height }}
-                      />
-                      <div
-                        className="absolute left-full top-[10px] w-5 origin-left skew-y-[44deg] rounded-r-[10px] bg-neutral-500 dark:bg-neutral-400"
-                        style={{ height: `calc(${bar.height} - 10px)` }}
-                      />
-                      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-                        Q{index + 1}
-                      </div>
-                    </motion.div>
+                    <div className="flex h-full items-end justify-center gap-2">
+                      <motion.div
+                        className="flex flex-1 items-end justify-center"
+                        animate={
+                          prefersReducedMotion ? undefined : { y: [0, -6, 0] }
+                        }
+                        transition={{
+                          duration: 3.2,
+                          ease: "easeInOut",
+                          repeat: Number.POSITIVE_INFINITY,
+                          delay: index * 0.1,
+                        }}
+                      >
+                        <div
+                          className="w-full max-w-[38px] rounded-t-[16px] border border-black/10 bg-neutral-300 shadow-[0_12px_24px_rgba(0,0,0,0.1)] dark:border-white/10 dark:bg-neutral-700"
+                          style={{ height: `${quarter.committed}%` }}
+                        />
+                      </motion.div>
+                      <motion.div
+                        className="flex flex-1 items-end justify-center"
+                        animate={
+                          prefersReducedMotion ? undefined : { y: [0, -8, 0] }
+                        }
+                        transition={{
+                          duration: 3.4,
+                          ease: "easeInOut",
+                          repeat: Number.POSITIVE_INFINITY,
+                          delay: index * 0.16,
+                        }}
+                      >
+                        <div
+                          className="w-full max-w-[38px] rounded-t-[16px] border border-black/10 bg-black shadow-[0_18px_28px_rgba(0,0,0,0.18)] dark:border-white/10 dark:bg-white"
+                          style={{ height: `${quarter.revised}%` }}
+                        />
+                      </motion.div>
+                    </div>
+                    <div className="space-y-1 text-center">
+                      <p className="text-[10px] font-medium tracking-[0.2em] text-neutral-500 uppercase dark:text-neutral-400">
+                        {quarter.label}
+                      </p>
+                      <p className="text-xs text-neutral-600 dark:text-neutral-300">
+                        {quarter.committed}% / {quarter.revised}%
+                      </p>
+                    </div>
                   </div>
                 ))}
-                <motion.div
-                  className="absolute left-[18%] top-[28%] h-[2px] w-[56%] origin-left bg-black dark:bg-white"
-                  animate={prefersReducedMotion ? undefined : { rotate: [-10, -6, -10] }}
-                  transition={{ duration: 4.6, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY }}
-                />
-                <motion.div
-                  className="absolute left-[34%] top-[22%] size-3 rounded-full border border-black bg-white dark:border-white dark:bg-black"
-                  animate={prefersReducedMotion ? undefined : { scale: [1, 1.18, 1] }}
-                  transition={{ duration: 2.6, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY }}
-                />
               </div>
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {scenarioSignals.map((signal) => (
+                <div
+                  key={signal.title}
+                  className="min-w-0 rounded-[18px] border border-black/8 bg-neutral-50 px-4 py-4 dark:border-white/10 dark:bg-neutral-950"
+                >
+                  <div className="flex min-w-0 items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        {signal.title}
+                      </p>
+                      <p className="mt-2 text-xs leading-5 text-pretty text-neutral-600 dark:text-neutral-300">
+                        {signal.note}
+                      </p>
+                    </div>
+                    <span className="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1 text-sm font-semibold text-black dark:border-white/10 dark:bg-black dark:text-white">
+                      {signal.value}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="grid gap-4">
             <motion.div
               className="rounded-[24px] border border-black/10 bg-white p-5 shadow-[0_18px_36px_rgba(0,0,0,0.08)] dark:border-white/12 dark:bg-black dark:shadow-[0_18px_36px_rgba(0,0,0,0.36)]"
               animate={prefersReducedMotion ? undefined : { y: [0, -8, 0] }}
-              transition={{ duration: 4.8, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY }}
+              transition={{
+                duration: 4.8,
+                ease: "easeInOut",
+                repeat: Number.POSITIVE_INFINITY,
+              }}
             >
               <div className="flex items-center justify-between">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-[11px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
                   Plan health
                 </p>
-                <span className="rounded-full border border-black/8 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-neutral-500 dark:border-white/10 dark:text-neutral-400">
+                <span className="rounded-full border border-black/8 px-2 py-1 text-[10px] tracking-[0.16em] text-neutral-500 uppercase dark:border-white/10 dark:text-neutral-400">
                   Stable
                 </span>
               </div>
@@ -218,18 +298,32 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
                   <motion.div
                     className="absolute inset-2 rounded-full border-2 border-dashed border-black/12 dark:border-white/14"
                     animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-                    transition={{ duration: 10, ease: "linear", repeat: Number.POSITIVE_INFINITY }}
+                    transition={{
+                      duration: 10,
+                      ease: "linear",
+                      repeat: Number.POSITIVE_INFINITY,
+                    }}
                   />
-                  <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">98</span>
+                  <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                    98
+                  </span>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-600 dark:text-neutral-300">Variance</span>
-                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">+4.8%</span>
+                    <span className="text-neutral-600 dark:text-neutral-300">
+                      Variance
+                    </span>
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                      +4.8%
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-600 dark:text-neutral-300">Runway</span>
-                    <span className="font-semibold text-black dark:text-white">16 mo</span>
+                    <span className="text-neutral-600 dark:text-neutral-300">
+                      Runway
+                    </span>
+                    <span className="font-semibold text-black dark:text-white">
+                      16 mo
+                    </span>
                   </div>
                 </div>
               </div>
@@ -237,8 +331,16 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
                 <div className="h-2 rounded-full bg-neutral-100 dark:bg-neutral-900">
                   <motion.div
                     className="h-2 rounded-full bg-black dark:bg-white"
-                    animate={prefersReducedMotion ? undefined : { width: ["52%", "74%", "64%", "74%"] }}
-                    transition={{ duration: 5.2, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY }}
+                    animate={
+                      prefersReducedMotion
+                        ? undefined
+                        : { width: ["52%", "74%", "64%", "74%"] }
+                    }
+                    transition={{
+                      duration: 5.2,
+                      ease: "easeInOut",
+                      repeat: Number.POSITIVE_INFINITY,
+                    }}
                   />
                 </div>
                 <div className="flex items-end gap-1.5">
@@ -247,7 +349,11 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
                       key={height}
                       className="w-full rounded-t-full bg-black/16 dark:bg-white/18"
                       style={{ height }}
-                      animate={prefersReducedMotion ? undefined : { height: [height - 4, height, height - 1, height] }}
+                      animate={
+                        prefersReducedMotion
+                          ? undefined
+                          : { height: [height - 4, height, height - 1, height] }
+                      }
                       transition={{
                         duration: 2.8,
                         ease: "easeInOut",
@@ -259,32 +365,42 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
                 </div>
               </div>
             </motion.div>
-            <motion.div
-              className="rounded-[24px] border border-black/8 bg-white/92 p-5 dark:border-white/10 dark:bg-black/88"
-              animate={prefersReducedMotion ? undefined : { y: [0, 5, 0] }}
-              transition={{ duration: 4.2, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY }}
-            >
+            <div className="rounded-[24px] border border-black/8 bg-white/92 p-5 dark:border-white/10 dark:bg-black/88">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-[11px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
                   Scenario drift
                 </p>
-                <span className="text-sm font-semibold text-red-600 dark:text-red-400">2 alerts</span>
+                <span className="text-sm font-semibold text-red-600 dark:text-red-400">
+                  2 alerts
+                </span>
               </div>
               <div className="mt-4 space-y-3">
                 {[
-                  ["Demand ramp", "Needs review", "text-red-600 dark:text-red-400"],
-                  ["Hiring plan", "Back on target", "text-emerald-600 dark:text-emerald-400"],
+                  [
+                    "Demand ramp",
+                    "In review",
+                    "text-neutral-700 dark:text-neutral-200",
+                  ],
+                  [
+                    "Hiring plan",
+                    "Back on target",
+                    "text-emerald-600 dark:text-emerald-400",
+                  ],
                 ].map(([label, value, tone]) => (
                   <div
                     key={label}
                     className="flex items-center justify-between rounded-[18px] border border-black/8 bg-neutral-50 px-3 py-2.5 dark:border-white/10 dark:bg-neutral-950"
                   >
-                    <span className="text-sm text-neutral-600 dark:text-neutral-300">{label}</span>
-                    <span className={cn("text-sm font-medium", tone)}>{value}</span>
+                    <span className="text-sm text-neutral-600 dark:text-neutral-300">
+                      {label}
+                    </span>
+                    <span className={cn("text-sm font-medium", tone)}>
+                      {value}
+                    </span>
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -310,8 +426,12 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
               delay: index * 0.14,
             }}
           >
-            <span className="text-sm text-neutral-600 dark:text-neutral-300">{label}</span>
-            <span className="text-lg font-semibold text-black dark:text-white">{value}</span>
+            <span className="text-sm text-neutral-600 dark:text-neutral-300">
+              {label}
+            </span>
+            <span className="text-lg font-semibold text-black dark:text-white">
+              {value}
+            </span>
           </motion.div>
         ))}
       </div>
@@ -338,7 +458,7 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
               delay: index * 0.12,
             }}
           >
-            <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+            <p className="text-[11px] tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
               {label}
             </p>
             <p className={cn("mt-3 text-2xl font-semibold", tone)}>{value}</p>
@@ -370,7 +490,7 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
             <span className="mt-1 size-2 rounded-full bg-black dark:bg-white" />
             <div className="min-w-0 flex-1">
               <p className="text-sm text-black dark:text-white">{text}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+              <p className="mt-1 text-xs tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
                 {time}
               </p>
             </div>
@@ -383,14 +503,18 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
   if (panel === "control") {
     return (
       <div className="mt-4 space-y-4 rounded-[24px] border border-black/8 bg-white p-5 dark:border-white/10 dark:bg-black">
-        {([
-          ["Editors", true],
-          ["Approvers", true],
-          ["Viewers", false],
-        ] as const).map(([label, enabled]) => (
+        {(
+          [
+            ["Editors", true],
+            ["Approvers", true],
+            ["Viewers", false],
+          ] as const
+        ).map(([label, enabled]) => (
           <div key={label} className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-medium text-black dark:text-white">{label}</p>
+              <p className="text-sm font-medium text-black dark:text-white">
+                {label}
+              </p>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
                 Scoped to workbook permissions
               </p>
@@ -435,8 +559,10 @@ function PlatformVisual({ panel }: { panel: (typeof bentoItems)[number]["panel"]
             delay: index * 0.2,
           }}
         >
-          <p className="text-sm font-medium text-black dark:text-white">{title}</p>
-          <p className="mt-2 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+          <p className="text-sm font-medium text-black dark:text-white">
+            {title}
+          </p>
+          <p className="mt-2 text-xs tracking-[0.18em] text-neutral-500 uppercase dark:text-neutral-400">
             {meta}
           </p>
         </motion.div>
@@ -456,10 +582,10 @@ export function FeatureGrid() {
           <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
             <Card className="glass-strong border-black/8 dark:border-white/10">
               <CardContent className="p-8">
-                <p className="text-sm font-medium uppercase tracking-[0.24em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-sm font-medium tracking-[0.24em] text-neutral-500 uppercase dark:text-neutral-400">
                   Definition
                 </p>
-                <h2 className="mt-4 text-3xl font-[var(--font-heading)] font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
+                <h2 className="mt-4 text-3xl font-[var(--font-heading)] font-semibold tracking-tight text-black sm:text-4xl dark:text-white">
                   A spreadsheet-native planning system for budgets, forecasts,
                   approvals, and reporting.
                 </h2>
@@ -467,12 +593,13 @@ export function FeatureGrid() {
             </Card>
 
             <Card className="glass-strong border-black/8 dark:border-white/10">
-              <CardContent className="grid gap-6 p-8 text-base leading-8 text-neutral-700 dark:text-neutral-300 lg:grid-cols-2">
+              <CardContent className="grid gap-6 p-8 text-base leading-8 text-neutral-700 lg:grid-cols-2 dark:text-neutral-300">
                 <p>
                   Native FP&amp;A keeps the grid, formulas, and workbook mental
                   model that finance teams already move fast in. What changes is
-                  the operating layer around it: permissions, live collaboration,
-                  review states, auditability, and publish-ready outputs.
+                  the operating layer around it: permissions, live
+                  collaboration, review states, auditability, and publish-ready
+                  outputs.
                 </p>
                 <p>
                   The result is one shared model that finance, business owners,
@@ -495,8 +622,9 @@ export function FeatureGrid() {
               <Badge className="mb-4 w-fit" variant="gradient">
                 Platform compatibilities
               </Badge>
-              <h2 className="text-3xl font-[var(--font-heading)] font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
-                Bento-grid product surfaces instead of another flat feature list.
+              <h2 className="text-3xl font-[var(--font-heading)] font-semibold tracking-tight text-black sm:text-4xl dark:text-white">
+                Bento-grid product surfaces instead of another flat feature
+                list.
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-neutral-600 dark:text-neutral-300">
@@ -514,7 +642,10 @@ export function FeatureGrid() {
               delay={index * 0.08}
               className={item.className}
             >
-              <Card className="group h-full overflow-hidden border-black/8 dark:border-white/10" hover>
+              <Card
+                className="group h-full min-w-0 overflow-hidden border-black/8 dark:border-white/10"
+                hover
+              >
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-3">
@@ -526,7 +657,7 @@ export function FeatureGrid() {
                         <CardDescription>{item.description}</CardDescription>
                       </div>
                     </div>
-                    <span className="rounded-full border border-black/8 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-neutral-500 dark:border-white/10 dark:text-neutral-400">
+                    <span className="rounded-full border border-black/8 px-3 py-1 text-[11px] tracking-[0.18em] text-neutral-500 uppercase dark:border-white/10 dark:text-neutral-400">
                       Module
                     </span>
                   </div>
@@ -546,13 +677,16 @@ export function FeatureGrid() {
       >
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <MotionReveal {...MotionPresets.slideRight}>
-            <Card className="relative h-full overflow-hidden border-black/8 bg-black text-white dark:border-white/10" hover>
+            <Card
+              className="relative h-full overflow-hidden border-black/8 bg-black text-white dark:border-white/10"
+              hover
+            >
               <CardContent className="relative flex h-full flex-col justify-between gap-8 p-8">
                 <div>
                   <div className="mb-5 flex size-12 items-center justify-center rounded-2xl border border-white/10 bg-white/8">
                     <Workflow className="size-5" />
                   </div>
-                  <p className="text-sm uppercase tracking-[0.24em] text-white/70">
+                  <p className="text-sm tracking-[0.24em] text-white/70 uppercase">
                     Workflow
                   </p>
                   <h2 className="mt-4 text-3xl font-[var(--font-heading)] font-semibold tracking-tight sm:text-4xl">
@@ -575,10 +709,13 @@ export function FeatureGrid() {
                 {...MotionPresets.slideLeft}
                 delay={index * 0.12}
               >
-                <Card className="group overflow-hidden border-black/8 dark:border-white/10" hover>
+                <Card
+                  className="group overflow-hidden border-black/8 dark:border-white/10"
+                  hover
+                >
                   <CardContent className="flex flex-col gap-4 p-7 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500 dark:text-neutral-400">
+                      <p className="text-xs font-semibold tracking-[0.32em] text-neutral-500 uppercase dark:text-neutral-400">
                         {item.step}
                       </p>
                       <h3 className="mt-3 text-2xl font-semibold text-black transition-opacity duration-200 group-hover:opacity-70 dark:text-white">
@@ -601,10 +738,10 @@ export function FeatureGrid() {
           <Card className="relative overflow-hidden border-black/8 bg-white dark:border-white/10 dark:bg-black">
             <CardContent className="relative flex flex-col gap-6 p-8 lg:flex-row lg:items-center lg:justify-between lg:p-10">
               <div className="max-w-2xl">
-                <p className="text-sm font-medium uppercase tracking-[0.24em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-sm font-medium tracking-[0.24em] text-neutral-500 uppercase dark:text-neutral-400">
                   Ready to get started
                 </p>
-                <h2 className="mt-3 text-3xl font-[var(--font-heading)] font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
+                <h2 className="mt-3 text-3xl font-[var(--font-heading)] font-semibold tracking-tight text-black sm:text-4xl dark:text-white">
                   Start building your finance operating model today.
                 </h2>
               </div>

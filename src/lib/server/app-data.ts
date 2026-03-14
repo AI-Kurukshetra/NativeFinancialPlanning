@@ -341,6 +341,16 @@ export type WorkflowPageItem = {
   updatedAt: string;
 };
 
+export type WorkflowDetailPageData = {
+  currentUserId: string | null;
+  workflow: WorkflowPageItem & {
+    workbookName: string | null;
+    workbookDescription: string | null;
+    workbookStatus: WorkbookStatus | null;
+  };
+  workbook: WorkbookDetailItem | null;
+};
+
 export type ApproverChoice = {
   id: string;
   name: string;
@@ -581,6 +591,39 @@ export type SearchResultItem = {
 export type SearchPageData = {
   query: string;
   results: SearchResultItem[];
+};
+
+export type ReportDetailPageData = {
+  report: ReportPageItem & {
+    workbookName: string | null;
+    workbookDescription: string | null;
+    workbookStatus: WorkbookStatus | null;
+  };
+  schedules: SchedulePageItem[];
+  workbook: WorkbookDetailItem | null;
+  metrics: MetricPageItem[];
+  variances: VariancePageItem[];
+};
+
+export type PlanningDetailPageData = {
+  kind: "budget" | "forecast";
+  item:
+    | (BudgetPageItem & {
+        ownerName: string | null;
+        workbookName: string | null;
+        workbookDescription: string | null;
+        workbookStatus: WorkbookStatus | null;
+      })
+    | (ForecastPageItem & {
+        ownerName: string | null;
+        workbookName: string | null;
+        workbookDescription: string | null;
+        workbookStatus: WorkbookStatus | null;
+      });
+  workbook: WorkbookDetailItem | null;
+  metrics: MetricPageItem[];
+  variances: VariancePageItem[];
+  scenarios: ScenarioPageItem[];
 };
 
 const EMPTY_RESULT = {
@@ -1383,6 +1426,382 @@ export const getReportsPageData = cache(async () => {
   };
 });
 
+export const getReportDetailPageData = cache(
+  async (id: string): Promise<ReportDetailPageData | null> => {
+    const serverContext = await getWorkspaceServerContext();
+
+    if (!serverContext) {
+      return null;
+    }
+
+    const { supabase, workspace } = serverContext;
+    const organizationId = workspace.organization.id;
+    const [reportResult, schedulesResult, workbookNameMap, metricsResult, variancesResult] =
+      await Promise.all([
+        supabase
+          .from("reports")
+          .select("id, name, status, workbook_id, definition, generated_at, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("id", id)
+          .maybeSingle<ReportRow>(),
+        supabase
+          .from("schedules")
+          .select("id, report_id, name, cron_expression, timezone, status, next_run_at, last_run_at, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("report_id", id)
+          .order("updated_at", { ascending: false })
+          .returns<ScheduleRow[]>(),
+        getWorkbookNameMap(supabase, organizationId),
+        supabase
+          .from("metrics")
+          .select("id, workbook_id, name, slug, unit, actual_value, target_value, change_pct, updated_at")
+          .eq("organization_id", organizationId)
+          .order("updated_at", { ascending: false })
+          .limit(6)
+          .returns<MetricRow[]>(),
+        supabase
+          .from("variances")
+          .select("id, budget_id, forecast_id, account_id, cost_center_id, metric_id, name, period_label, plan_value, actual_value, variance_value, variance_percent, status, updated_at")
+          .eq("organization_id", organizationId)
+          .order("updated_at", { ascending: false })
+          .limit(6)
+          .returns<VarianceRow[]>(),
+      ]);
+
+    const error = [reportResult, schedulesResult, metricsResult, variancesResult].find(
+      (result) => result.error,
+    );
+
+    if (error?.error) {
+      throw new Error(error.error.message);
+    }
+
+    if (!reportResult.data) {
+      return null;
+    }
+
+    const [workbookDetail, accountNameMap, costCenterNameMap] = await Promise.all([
+      reportResult.data.workbook_id ? getWorkbookDetailItem(reportResult.data.workbook_id) : null,
+      getAccountNameMap(supabase, organizationId),
+      getCostCenterNameMap(supabase, organizationId),
+    ]);
+
+    return {
+      report: {
+        id: reportResult.data.id,
+        name: reportResult.data.name,
+        status: reportResult.data.status,
+        workbookId: reportResult.data.workbook_id ?? null,
+        definition: reportResult.data.definition ?? {},
+        generatedAt: reportResult.data.generated_at ?? null,
+        updatedAt: reportResult.data.updated_at,
+        workbookName: reportResult.data.workbook_id
+          ? workbookNameMap.get(reportResult.data.workbook_id) ?? null
+          : null,
+        workbookDescription: workbookDetail?.description ?? null,
+        workbookStatus: workbookDetail?.status ?? null,
+      },
+      schedules: (schedulesResult.data ?? []).map((schedule) => ({
+        id: schedule.id,
+        reportId: schedule.report_id ?? null,
+        reportName: reportResult.data?.name ?? null,
+        name: schedule.name,
+        cronExpression: schedule.cron_expression,
+        timezone: schedule.timezone,
+        status: schedule.status,
+        nextRunAt: schedule.next_run_at ?? null,
+        lastRunAt: schedule.last_run_at ?? null,
+        updatedAt: schedule.updated_at,
+      })),
+      workbook: workbookDetail,
+      metrics: (metricsResult.data ?? [])
+        .filter(
+          (metric) =>
+            !reportResult.data?.workbook_id || metric.workbook_id === reportResult.data.workbook_id,
+        )
+        .map((metric) => ({
+          id: metric.id,
+          name: metric.name,
+          unit: metric.unit,
+          actualValue: toNumber(metric.actual_value),
+          targetValue: toNumber(metric.target_value),
+          changePct: toNumber(metric.change_pct),
+          workbookName: metric.workbook_id ? workbookNameMap.get(metric.workbook_id) ?? null : null,
+          updatedAt: metric.updated_at,
+        })),
+      variances: (variancesResult.data ?? []).map((variance) => ({
+        id: variance.id,
+        name: variance.name,
+        periodLabel: variance.period_label,
+        planValue: toNumber(variance.plan_value) ?? 0,
+        actualValue: toNumber(variance.actual_value) ?? 0,
+        varianceValue: toNumber(variance.variance_value) ?? 0,
+        variancePercent: toNumber(variance.variance_percent),
+        status: variance.status,
+        accountName: variance.account_id ? accountNameMap.get(variance.account_id) ?? null : null,
+        costCenterName:
+          variance.cost_center_id ? costCenterNameMap.get(variance.cost_center_id) ?? null : null,
+        updatedAt: variance.updated_at,
+      })),
+    };
+  },
+);
+
+export const getBudgetDetailPageData = cache(
+  async (id: string): Promise<PlanningDetailPageData | null> => {
+    const serverContext = await getWorkspaceServerContext();
+
+    if (!serverContext) {
+      return null;
+    }
+
+    const { supabase, workspace } = serverContext;
+    const organizationId = workspace.organization.id;
+    const [budgetResult, owners, workbookNameMap, metricsResult, variancesResult, scenariosResult] =
+      await Promise.all([
+        supabase
+          .from("budgets")
+          .select("id, name, status, workbook_id, owner_id, starts_on, ends_on, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("id", id)
+          .maybeSingle<PlanningRow>(),
+        getOwnerMap(supabase),
+        getWorkbookNameMap(supabase, organizationId),
+        supabase
+          .from("metrics")
+          .select("id, workbook_id, name, slug, unit, actual_value, target_value, change_pct, updated_at")
+          .eq("organization_id", organizationId)
+          .order("updated_at", { ascending: false })
+          .limit(8)
+          .returns<MetricRow[]>(),
+        supabase
+          .from("variances")
+          .select("id, budget_id, forecast_id, account_id, cost_center_id, metric_id, name, period_label, plan_value, actual_value, variance_value, variance_percent, status, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("budget_id", id)
+          .order("updated_at", { ascending: false })
+          .limit(8)
+          .returns<VarianceRow[]>(),
+        supabase
+          .from("scenarios")
+          .select("id, forecast_id, workbook_id, name, status, driver_summary, updated_at")
+          .eq("organization_id", organizationId)
+          .order("updated_at", { ascending: false })
+          .limit(12)
+          .returns<ScenarioRow[]>(),
+      ]);
+
+    const error = [budgetResult, metricsResult, variancesResult, scenariosResult].find(
+      (result) => result.error,
+    );
+
+    if (error?.error) {
+      throw new Error(error.error.message);
+    }
+
+    if (!budgetResult.data) {
+      return null;
+    }
+
+    const [workbookDetail, accountNameMap, costCenterNameMap] = await Promise.all([
+      budgetResult.data.workbook_id ? getWorkbookDetailItem(budgetResult.data.workbook_id) : null,
+      getAccountNameMap(supabase, organizationId),
+      getCostCenterNameMap(supabase, organizationId),
+    ]);
+
+    const workbookId = budgetResult.data.workbook_id;
+    const scopedScenarios = (scenariosResult.data ?? [])
+      .filter((scenario) => !workbookId || scenario.workbook_id === workbookId)
+      .map((scenario) => ({
+        id: scenario.id,
+        name: scenario.name,
+        status: scenario.status,
+        workbookId: scenario.workbook_id ?? null,
+        workbookName: scenario.workbook_id ? workbookNameMap.get(scenario.workbook_id) ?? null : null,
+        forecastId: scenario.forecast_id ?? null,
+        forecastName: null,
+        drivers: Object.entries(scenario.driver_summary ?? {}).map(([key, value]) => ({
+          key,
+          value: String(value),
+        })),
+        updatedAt: scenario.updated_at,
+      }));
+
+    return {
+      kind: "budget",
+      item: {
+        id: budgetResult.data.id,
+        name: budgetResult.data.name,
+        status: budgetResult.data.status,
+        workbookId: workbookId ?? null,
+        ownerId: budgetResult.data.owner_id ?? null,
+        startsOn: budgetResult.data.starts_on ?? null,
+        endsOn: budgetResult.data.ends_on ?? null,
+        updatedAt: budgetResult.data.updated_at,
+        ownerName: budgetResult.data.owner_id ? owners.get(budgetResult.data.owner_id) ?? null : null,
+        workbookName: workbookId ? workbookNameMap.get(workbookId) ?? null : null,
+        workbookDescription: workbookDetail?.description ?? null,
+        workbookStatus: workbookDetail?.status ?? null,
+      },
+      workbook: workbookDetail,
+      metrics: (metricsResult.data ?? [])
+        .filter((metric) => !workbookId || metric.workbook_id === workbookId)
+        .map((metric) => ({
+          id: metric.id,
+          name: metric.name,
+          unit: metric.unit,
+          actualValue: toNumber(metric.actual_value),
+          targetValue: toNumber(metric.target_value),
+          changePct: toNumber(metric.change_pct),
+          workbookName: metric.workbook_id ? workbookNameMap.get(metric.workbook_id) ?? null : null,
+          updatedAt: metric.updated_at,
+        })),
+      variances: (variancesResult.data ?? []).map((variance) => ({
+        id: variance.id,
+        name: variance.name,
+        periodLabel: variance.period_label,
+        planValue: toNumber(variance.plan_value) ?? 0,
+        actualValue: toNumber(variance.actual_value) ?? 0,
+        varianceValue: toNumber(variance.variance_value) ?? 0,
+        variancePercent: toNumber(variance.variance_percent),
+        status: variance.status,
+        accountName: variance.account_id ? accountNameMap.get(variance.account_id) ?? null : null,
+        costCenterName:
+          variance.cost_center_id ? costCenterNameMap.get(variance.cost_center_id) ?? null : null,
+        updatedAt: variance.updated_at,
+      })),
+      scenarios: scopedScenarios,
+    };
+  },
+);
+
+export const getForecastDetailPageData = cache(
+  async (id: string): Promise<PlanningDetailPageData | null> => {
+    const serverContext = await getWorkspaceServerContext();
+
+    if (!serverContext) {
+      return null;
+    }
+
+    const { supabase, workspace } = serverContext;
+    const organizationId = workspace.organization.id;
+    const [forecastResult, owners, workbookNameMap, forecastNameMap, metricsResult, variancesResult, scenariosResult] =
+      await Promise.all([
+        supabase
+          .from("forecasts")
+          .select("id, name, status, workbook_id, owner_id, horizon_months, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("id", id)
+          .maybeSingle<PlanningRow>(),
+        getOwnerMap(supabase),
+        getWorkbookNameMap(supabase, organizationId),
+        getForecastNameMap(supabase, organizationId),
+        supabase
+          .from("metrics")
+          .select("id, workbook_id, name, slug, unit, actual_value, target_value, change_pct, updated_at")
+          .eq("organization_id", organizationId)
+          .order("updated_at", { ascending: false })
+          .limit(8)
+          .returns<MetricRow[]>(),
+        supabase
+          .from("variances")
+          .select("id, budget_id, forecast_id, account_id, cost_center_id, metric_id, name, period_label, plan_value, actual_value, variance_value, variance_percent, status, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("forecast_id", id)
+          .order("updated_at", { ascending: false })
+          .limit(8)
+          .returns<VarianceRow[]>(),
+        supabase
+          .from("scenarios")
+          .select("id, forecast_id, workbook_id, name, status, driver_summary, updated_at")
+          .eq("organization_id", organizationId)
+          .eq("forecast_id", id)
+          .order("updated_at", { ascending: false })
+          .limit(12)
+          .returns<ScenarioRow[]>(),
+      ]);
+
+    const error = [forecastResult, metricsResult, variancesResult, scenariosResult].find(
+      (result) => result.error,
+    );
+
+    if (error?.error) {
+      throw new Error(error.error.message);
+    }
+
+    if (!forecastResult.data) {
+      return null;
+    }
+
+    const [workbookDetail, accountNameMap, costCenterNameMap] = await Promise.all([
+      forecastResult.data.workbook_id ? getWorkbookDetailItem(forecastResult.data.workbook_id) : null,
+      getAccountNameMap(supabase, organizationId),
+      getCostCenterNameMap(supabase, organizationId),
+    ]);
+
+    const workbookId = forecastResult.data.workbook_id;
+
+    return {
+      kind: "forecast",
+      item: {
+        id: forecastResult.data.id,
+        name: forecastResult.data.name,
+        status: forecastResult.data.status,
+        workbookId: workbookId ?? null,
+        ownerId: forecastResult.data.owner_id ?? null,
+        horizonMonths: forecastResult.data.horizon_months ?? null,
+        updatedAt: forecastResult.data.updated_at,
+        ownerName:
+          forecastResult.data.owner_id ? owners.get(forecastResult.data.owner_id) ?? null : null,
+        workbookName: workbookId ? workbookNameMap.get(workbookId) ?? null : null,
+        workbookDescription: workbookDetail?.description ?? null,
+        workbookStatus: workbookDetail?.status ?? null,
+      },
+      workbook: workbookDetail,
+      metrics: (metricsResult.data ?? [])
+        .filter((metric) => !workbookId || metric.workbook_id === workbookId)
+        .map((metric) => ({
+          id: metric.id,
+          name: metric.name,
+          unit: metric.unit,
+          actualValue: toNumber(metric.actual_value),
+          targetValue: toNumber(metric.target_value),
+          changePct: toNumber(metric.change_pct),
+          workbookName: metric.workbook_id ? workbookNameMap.get(metric.workbook_id) ?? null : null,
+          updatedAt: metric.updated_at,
+        })),
+      variances: (variancesResult.data ?? []).map((variance) => ({
+        id: variance.id,
+        name: variance.name,
+        periodLabel: variance.period_label,
+        planValue: toNumber(variance.plan_value) ?? 0,
+        actualValue: toNumber(variance.actual_value) ?? 0,
+        varianceValue: toNumber(variance.variance_value) ?? 0,
+        variancePercent: toNumber(variance.variance_percent),
+        status: variance.status,
+        accountName: variance.account_id ? accountNameMap.get(variance.account_id) ?? null : null,
+        costCenterName:
+          variance.cost_center_id ? costCenterNameMap.get(variance.cost_center_id) ?? null : null,
+        updatedAt: variance.updated_at,
+      })),
+      scenarios: (scenariosResult.data ?? []).map((scenario) => ({
+        id: scenario.id,
+        name: scenario.name,
+        status: scenario.status,
+        workbookId: scenario.workbook_id ?? null,
+        workbookName: scenario.workbook_id ? workbookNameMap.get(scenario.workbook_id) ?? null : null,
+        forecastId: scenario.forecast_id ?? null,
+        forecastName: scenario.forecast_id ? forecastNameMap.get(scenario.forecast_id) ?? null : null,
+        drivers: Object.entries(scenario.driver_summary ?? {}).map(([key, value]) => ({
+          key,
+          value: String(value),
+        })),
+        updatedAt: scenario.updated_at,
+      })),
+    };
+  },
+);
+
 export const getWorkflowsPageData = cache(async () => {
   const serverContext = await getWorkspaceServerContext();
 
@@ -1456,6 +1875,70 @@ export const getWorkflowsPageData = cache(async () => {
     approverChoices,
   };
 });
+
+export const getWorkflowDetailPageData = cache(
+  async (id: string): Promise<WorkflowDetailPageData | null> => {
+    const serverContext = await getWorkspaceServerContext();
+
+    if (!serverContext) {
+      return null;
+    }
+
+    const { supabase, workspace } = serverContext;
+    const organizationId = workspace.organization.id;
+    const [workflowResult, approvalsResult, owners, workbookNameMap] = await Promise.all([
+      supabase
+        .from("workflows")
+        .select("id, name, status, workbook_id, current_step, updated_at")
+        .eq("organization_id", organizationId)
+        .eq("id", id)
+        .maybeSingle<WorkflowRow>(),
+      supabase
+        .from("approvals")
+        .select("id, workflow_id, approver_id, status, decision_note, decision_at")
+        .eq("workflow_id", id)
+        .returns<WorkflowApprovalRow[]>(),
+      getOwnerMap(supabase),
+      getWorkbookNameMap(supabase, organizationId),
+    ]);
+
+    const error = [workflowResult, approvalsResult].find((result) => result.error);
+
+    if (error?.error) {
+      throw new Error(error.error.message);
+    }
+
+    if (!workflowResult.data) {
+      return null;
+    }
+
+    const workbookDetail = workflowResult.data.workbook_id
+      ? await getWorkbookDetailItem(workflowResult.data.workbook_id)
+      : null;
+
+    return {
+      currentUserId: workspace.user.id,
+      workflow: {
+        id: workflowResult.data.id,
+        name: workflowResult.data.name,
+        status: workflowResult.data.status,
+        workbookId: workflowResult.data.workbook_id ?? null,
+        currentStep: workflowResult.data.current_step ?? null,
+        approvals: (approvalsResult.data ?? []).map((approval) => ({
+          ...approval,
+          approverName: owners.get(approval.approver_id) ?? "Unknown approver",
+        })),
+        updatedAt: workflowResult.data.updated_at,
+        workbookName: workflowResult.data.workbook_id
+          ? workbookNameMap.get(workflowResult.data.workbook_id) ?? null
+          : null,
+        workbookDescription: workbookDetail?.description ?? null,
+        workbookStatus: workbookDetail?.status ?? null,
+      },
+      workbook: workbookDetail,
+    };
+  },
+);
 
 export const getWorkspacePageData = cache(async () => {
   const serverContext = await getAuthenticatedServerContext();
@@ -1716,7 +2199,7 @@ export const getSearchPageData = cache(async (query: string): Promise<SearchPage
         type: "report" as const,
         title: item.name,
         description: `Layout ${(item.definition.layout as string | undefined) ?? "custom"}`,
-        href: `/reports`,
+        href: `/reports/${item.id}`,
         metadata: item.status.replaceAll("_", " "),
       })),
       ...(workflowsResult.data ?? []).map((item) => ({

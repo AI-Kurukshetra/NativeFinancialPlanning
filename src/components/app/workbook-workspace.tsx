@@ -998,33 +998,101 @@ export function WorkbookWorkspace({
         <Card>
           <CardHeader>
             <CardTitle>Version history</CardTitle>
-            <CardDescription>Restore the workbook to any saved snapshot.</CardDescription>
+            <CardDescription>
+              Restore the workbook to any saved snapshot and review the checkpoint timeline.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
+            <div className="grid gap-3 md:grid-cols-3">
+              <div className="rounded-[24px] bg-white/75 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Snapshots</p>
+                <p className="mt-3 text-2xl font-semibold text-slate-950">{workbook.versions.length}</p>
+                <p className="mt-2 text-sm text-slate-600">Recovery points stored for this workbook.</p>
+              </div>
+              <div className="rounded-[24px] bg-white/75 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Comments</p>
+                <p className="mt-3 text-2xl font-semibold text-slate-950">{workbook.comments.length}</p>
+                <p className="mt-2 text-sm text-slate-600">Review context alongside versions.</p>
+              </div>
+              <div className="rounded-[24px] bg-white/75 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Worksheets</p>
+                <p className="mt-3 text-2xl font-semibold text-slate-950">{workbook.worksheets.length}</p>
+                <p className="mt-2 text-sm text-slate-600">Model structure captured in the current book.</p>
+              </div>
+            </div>
+
             {workbook.versions.length === 0 ? (
               <p className="text-sm text-slate-500">No snapshots saved yet.</p>
             ) : (
-              workbook.versions.map((version) => (
-                <div
-                  className="flex items-center justify-between gap-3 rounded-2xl bg-white/75 p-4"
-                  key={version.id}
-                >
-                  <div>
-                    <p className="text-sm font-medium text-slate-950">{version.label}</p>
-                    <p className="text-xs text-slate-500">
-                      {new Date(version.created_at).toLocaleString("en-US")}
-                    </p>
-                  </div>
-                  <Button
-                    leftIcon={<RotateCcw className="size-4" />}
-                    onClick={() => void restoreVersion(version.id)}
-                    size="sm"
-                    variant="secondary"
-                  >
-                    Restore
-                  </Button>
-                </div>
-              ))
+              <div className="space-y-4">
+                {workbook.versions.map((version, index) => {
+                  const isLatest = index === 0;
+                  const hoursSinceVersion = Math.max(
+                    1,
+                    Math.round(
+                      Math.abs(Date.now() - new Date(version.created_at).getTime()) / 36e5,
+                    ),
+                  );
+
+                  return (
+                    <div
+                      className="relative overflow-hidden rounded-[26px] border border-black/8 bg-[linear-gradient(145deg,rgba(255,255,255,0.94),rgba(241,245,249,0.94))] p-5"
+                      key={version.id}
+                    >
+                      {index < workbook.versions.length - 1 ? (
+                        <div className="absolute bottom-[-20px] left-8 top-[72px] w-px bg-slate-200" />
+                      ) : null}
+                      <div className="flex items-start gap-4">
+                        <div className="relative z-10 mt-1 flex size-9 items-center justify-center rounded-full bg-slate-950 text-xs font-semibold text-white">
+                          {workbook.versions.length - index}
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="text-sm font-medium text-slate-950">{version.label}</p>
+                                {isLatest ? <Badge variant="gradient">Latest</Badge> : null}
+                              </div>
+                              <p className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
+                                {new Date(version.created_at).toLocaleString("en-US")}
+                              </p>
+                            </div>
+                            <Button
+                              leftIcon={<RotateCcw className="size-4" />}
+                              onClick={() => void restoreVersion(version.id)}
+                              size="sm"
+                              variant="secondary"
+                            >
+                              Restore
+                            </Button>
+                          </div>
+
+                          <div className="mt-4 grid gap-3 md:grid-cols-3">
+                            <div className="rounded-[20px] bg-slate-50/90 p-3">
+                              <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Age</p>
+                              <p className="mt-2 text-sm font-medium text-slate-950">
+                                {hoursSinceVersion}h from current
+                              </p>
+                            </div>
+                            <div className="rounded-[20px] bg-slate-50/90 p-3">
+                              <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Scope</p>
+                              <p className="mt-2 text-sm font-medium text-slate-950">
+                                {workbook.worksheets.length} sheets captured
+                              </p>
+                            </div>
+                            <div className="rounded-[20px] bg-slate-50/90 p-3">
+                              <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Review context</p>
+                              <p className="mt-2 text-sm font-medium text-slate-950">
+                                {workbook.comments.length} comments available
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </CardContent>
         </Card>

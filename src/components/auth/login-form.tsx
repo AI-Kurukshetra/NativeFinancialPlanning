@@ -57,7 +57,10 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
   return (
     <form className="space-y-4" onSubmit={onSubmit}>
       <div className="space-y-2">
-        <label className="text-sm font-medium text-slate-800" htmlFor="email">
+        <label
+          className="text-sm font-medium text-neutral-800 dark:text-neutral-200"
+          htmlFor="email"
+        >
           Work email
         </label>
         <Input
@@ -74,7 +77,7 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
 
       <div className="space-y-2">
         <label
-          className="text-sm font-medium text-slate-800"
+          className="text-sm font-medium text-neutral-800 dark:text-neutral-200"
           htmlFor="password"
         >
           Password
@@ -96,11 +99,11 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
         {isPending ? "Signing in..." : "Sign in"}
       </Button>
 
-      <p className="text-center text-sm text-slate-600">
+      <p className="text-center text-sm text-neutral-600 dark:text-neutral-400">
         Don&apos;t have an account?{" "}
         <button
           type="button"
-          className="font-medium text-slate-950 underline underline-offset-4 hover:text-slate-700"
+          className="font-medium text-black underline underline-offset-4 hover:text-neutral-700 dark:text-white dark:hover:text-neutral-300"
           onClick={onSwitch}
         >
           Sign up

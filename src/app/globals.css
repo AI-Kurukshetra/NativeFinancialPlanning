@@ -2,8 +2,14 @@
 @import "tailwindcss";
 
 :root {
-  --font-heading: "IBM Plex Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", monospace;
-  --font-body: "IBM Plex Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", monospace;
+  --font-display:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-heading:
+    "IBM Plex Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono",
+    monospace;
+  --font-body:
+    "IBM Plex Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono",
+    monospace;
 
   --background: 0 0% 100%;
   --foreground: 0 0% 0%;
@@ -80,9 +86,18 @@
   text-rendering: optimizeLegibility;
 }
 
+*::before,
+*::after {
+  border-color: hsl(var(--border));
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  background-color: hsl(var(--background));
+  transition:
+    background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body {
@@ -92,6 +107,9 @@ body {
   color: hsl(var(--foreground));
   font-family: var(--font-body);
   overflow-x: hidden;
+  transition:
+    background 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body::before {
@@ -101,9 +119,16 @@ body::before {
   background-image: var(--page-grid);
   background-size: 72px 72px;
   content: "";
-  mask-image: linear-gradient(180deg, rgba(255, 255, 255, 0.78), transparent 82%);
+  mask-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.78),
+    transparent 82%
+  );
   opacity: 0.72;
   pointer-events: none;
+  transition:
+    background-image 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body::after {
@@ -116,13 +141,26 @@ body::after {
     radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.02), transparent 24%);
   content: "";
   pointer-events: none;
+  transition: background 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dark body::after {
   background:
-    radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.04), transparent 24%),
-    radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.03), transparent 18%),
-    radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.02), transparent 24%);
+    radial-gradient(
+      circle at 18% 20%,
+      rgba(255, 255, 255, 0.04),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 80% 12%,
+      rgba(255, 255, 255, 0.03),
+      transparent 18%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255, 255, 255, 0.02),
+      transparent 24%
+    );
 }
 
 ::selection {
@@ -164,6 +202,11 @@ button {
   box-shadow: var(--glass-shadow);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  transition:
+    background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    backdrop-filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .glass-strong {
@@ -172,6 +215,11 @@ button {
   box-shadow: var(--glass-shadow-strong);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
+  transition:
+    background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    backdrop-filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .text-balance {
@@ -193,7 +241,11 @@ button {
 }
 
 .dark .page-shell::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05),
+    transparent 22%
+  );
 }
 
 .shimmer {
@@ -204,7 +256,12 @@ button {
 .shimmer::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
   content: "";
   animation: shimmer 2.4s infinite;
 }
@@ -239,6 +296,37 @@ button {
   }
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root) {
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body,
+  body::before,
+  body::after,
+  .glass,
+  .glass-strong,
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    transition: none;
+    animation: none;
+  }
+}
+
 @keyframes scaleIn {
   0% {
     opacity: 0;
@@ -262,7 +350,9 @@ button {
 }
 
 .animate-marquee {
-  animation: marquee 28s linear infinite;
+  animation: marquee 34s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .animate-scale-in {

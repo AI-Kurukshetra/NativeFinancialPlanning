@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { SiteHeader } from "@/components/marketing/site-header";
@@ -14,24 +15,24 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
             © {new Date().getFullYear()} Native FP&A. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a
-              href="#"
+            <Link
+              href="/privacy"
               className="text-sm text-neutral-600 transition-colors duration-200 hover:text-black dark:text-neutral-400 dark:hover:text-white"
             >
               Privacy
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/terms"
               className="text-sm text-neutral-600 transition-colors duration-200 hover:text-black dark:text-neutral-400 dark:hover:text-white"
             >
               Terms
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/contact"
               className="text-sm text-neutral-600 transition-colors duration-200 hover:text-black dark:text-neutral-400 dark:hover:text-white"
             >
               Contact
-            </a>
+            </Link>
           </div>
         </div>
       </footer>

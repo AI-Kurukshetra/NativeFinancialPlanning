@@ -1208,48 +1208,6 @@ USING (public.is_org_member(organization_id));
 
 ---
 
-## Roadmap
-
-### Phase 1: Core Platform (Current)
-- [x] Authentication and onboarding
-- [x] Workbook CRUD operations
-- [x] Worksheet and cell data model
-- [x] Dashboard with metrics
-- [x] Marketing site
-- [ ] Real-time cell sync (Supabase Realtime)
-- [ ] Formula engine
-- [ ] Cell formatting and validation
-
-### Phase 2: Collaboration
-- [ ] Comments and mentions
-- [ ] Approval workflows
-- [ ] Version control UI
-- [ ] Activity feed
-- [ ] Notifications center
-
-### Phase 3: Financial Planning
-- [ ] Budget cycle management
-- [ ] Forecast modeling
-- [ ] Report builder
-- [ ] Variance analysis
-- [ ] Executive dashboards
-
-### Phase 4: Integrations
-- [ ] Excel import/export
-- [ ] QuickBooks integration
-- [ ] NetSuite integration
-- [ ] Slack notifications
-- [ ] Google Sheets sync
-
-### Phase 5: Enterprise
-- [ ] SSO (SAML, OIDC)
-- [ ] Advanced permissions
-- [ ] Custom fields
-- [ ] API rate limiting
-- [ ] Usage analytics
-
----
-
 ## Contributing
 
 Contributions are welcome! Please read our contributing guidelines before submitting PRs.

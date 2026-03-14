@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { CalendarClock, Download, FileOutput, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -216,7 +217,12 @@ export function ReportingStudio({ reports, schedules }: ReportingStudioProps) {
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-base font-semibold text-slate-950">{report.name}</p>
+                      <Link
+                        className="text-base font-semibold text-slate-950 transition-colors hover:text-slate-600"
+                        href={`/reports/${report.id}`}
+                      >
+                        {report.name}
+                      </Link>
                       <Badge variant={getReportVariant(report.status)}>
                         {report.status}
                       </Badge>
@@ -253,6 +259,9 @@ export function ReportingStudio({ reports, schedules }: ReportingStudioProps) {
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href={`/reports/${report.id}`}>Open report</Link>
+                  </Button>
                   <Button
                     leftIcon={<FileOutput className="size-4" />}
                     loading={isPending}
