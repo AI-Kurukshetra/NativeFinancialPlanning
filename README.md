@@ -1,6 +1,7 @@
 # Native FP&A Platform
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/your-org/native-fpa)
+[![Version](https://img.shields.io/badge/version-0.1.0--alpha-blue.svg)](https://github.com/your-org/native-fpa)
+[![Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/your-org/native-fpa)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
@@ -37,8 +38,10 @@ Native FP&A is a production-grade, web-first planning workspace for budgets, for
   - [Core Tables](#core-tables)
   - [Row Level Security](#row-level-security)
 - [Security](#security)
-- [Roadmap](#roadmap)
+- [Next Roadmap](#next-roadmap)
+- [Contributing](#contributing)
 - [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -1206,7 +1209,6 @@ USING (public.is_org_member(organization_id));
 - **No sensitive data** in client-side logs
 - **Input validation** with Zod schemas
 
----
 
 ## Contributing
 

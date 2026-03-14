@@ -1,6 +1,6 @@
 begin;
 
--- QA auth users for realistic product testing.
+-- Seed auth users for realistic product demos.
 insert into auth.users (
   instance_id,
   id,
@@ -21,14 +21,14 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
     'authenticated',
     'authenticated',
-    'emily.parker@northwind.test',
+    'emily.parker@northwindfinance.com',
     crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
-      'email', 'emily.parker@northwind.test',
+      'email', 'emily.parker@northwindfinance.com',
       'full_name', 'Emily Parker',
       'email_verified', true,
       'phone_verified', false
@@ -41,14 +41,14 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
     'authenticated',
     'authenticated',
-    'michael.reed@northwind.test',
+    'michael.reed@northwindfinance.com',
     crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
-      'email', 'michael.reed@northwind.test',
+      'email', 'michael.reed@northwindfinance.com',
       'full_name', 'Michael Reed',
       'email_verified', true,
       'phone_verified', false
@@ -61,14 +61,14 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
     'authenticated',
     'authenticated',
-    'olivia.bennett@northwind.test',
+    'olivia.bennett@northwindfinance.com',
     crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
-      'email', 'olivia.bennett@northwind.test',
+      'email', 'olivia.bennett@northwindfinance.com',
       'full_name', 'Olivia Bennett',
       'email_verified', true,
       'phone_verified', false
@@ -81,14 +81,14 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
     'authenticated',
     'authenticated',
-    'daniel.brooks@northwind.test',
+    'daniel.brooks@northwindfinance.com',
     crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
-      'email', 'daniel.brooks@northwind.test',
+      'email', 'daniel.brooks@northwindfinance.com',
       'full_name', 'Daniel Brooks',
       'email_verified', true,
       'phone_verified', false
@@ -101,14 +101,14 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
     'authenticated',
     'authenticated',
-    'sophie.turner@northwind.test',
+    'sophie.turner@northwindfinance.com',
     crypt('Northwind#2026', gen_salt('bf')),
     timezone('utc', now()),
     timezone('utc', now()),
     '{"provider":"email","providers":["email"]}'::jsonb,
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
-      'email', 'sophie.turner@northwind.test',
+      'email', 'sophie.turner@northwindfinance.com',
       'full_name', 'Sophie Turner',
       'email_verified', true,
       'phone_verified', false
@@ -141,7 +141,7 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001',
-      'email', 'emily.parker@northwind.test',
+      'email', 'emily.parker@northwindfinance.com',
       'full_name', 'Emily Parker',
       'email_verified', true,
       'phone_verified', false
@@ -157,7 +157,7 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002',
-      'email', 'michael.reed@northwind.test',
+      'email', 'michael.reed@northwindfinance.com',
       'full_name', 'Michael Reed',
       'email_verified', true,
       'phone_verified', false
@@ -173,7 +173,7 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003',
-      'email', 'olivia.bennett@northwind.test',
+      'email', 'olivia.bennett@northwindfinance.com',
       'full_name', 'Olivia Bennett',
       'email_verified', true,
       'phone_verified', false
@@ -189,7 +189,7 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004',
-      'email', 'daniel.brooks@northwind.test',
+      'email', 'daniel.brooks@northwindfinance.com',
       'full_name', 'Daniel Brooks',
       'email_verified', true,
       'phone_verified', false
@@ -205,7 +205,7 @@ values
     'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
     jsonb_build_object(
       'sub', 'c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005',
-      'email', 'sophie.turner@northwind.test',
+      'email', 'sophie.turner@northwindfinance.com',
       'full_name', 'Sophie Turner',
       'email_verified', true,
       'phone_verified', false
@@ -242,12 +242,12 @@ set
 
 insert into public.profiles (id, email, full_name, default_organization_id)
 values
-  ('3ca312cb-319a-46df-b5cd-8ffeea774839', 'john.carter@northwind.test', 'John Carter', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'emily.parker@northwind.test', 'Emily Parker', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'michael.reed@northwind.test', 'Michael Reed', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003', 'olivia.bennett@northwind.test', 'Olivia Bennett', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004', 'daniel.brooks@northwind.test', 'Daniel Brooks', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
-  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'sophie.turner@northwind.test', 'Sophie Turner', '6a601d44-72db-4c3b-a557-8a16f2a37b6b')
+  ('3ca312cb-319a-46df-b5cd-8ffeea774839', 'john.carter@northwindfinance.com', 'John Carter', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1001', 'emily.parker@northwindfinance.com', 'Emily Parker', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1002', 'michael.reed@northwindfinance.com', 'Michael Reed', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1003', 'olivia.bennett@northwindfinance.com', 'Olivia Bennett', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1004', 'daniel.brooks@northwindfinance.com', 'Daniel Brooks', '6a601d44-72db-4c3b-a557-8a16f2a37b6b'),
+  ('c4e7d7d7-91d8-4f12-8b44-07ce6d1a1005', 'sophie.turner@northwindfinance.com', 'Sophie Turner', '6a601d44-72db-4c3b-a557-8a16f2a37b6b')
 on conflict (id) do update
 set
   email = excluded.email,
