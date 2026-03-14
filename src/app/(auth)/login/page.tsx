@@ -1,22 +1,14 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
-import { LoginForm } from "@/components/auth/login-form";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import AuthPage from "@/app/(auth)/auth-page";
+import { getCurrentWorkspaceContext } from "@/lib/supabase/current-user";
 
-export default function LoginPage() {
-  return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <Link className="text-sm text-slate-500" href="/">
-          Back to site
-        </Link>
-        <CardTitle className="text-3xl">Sign in to the workspace</CardTitle>
-        <CardDescription>Use your approved finance team account to access dashboards, workbooks, and reviews.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <LoginForm />
-      </CardContent>
-    </Card>
-  );
+export default async function LoginPage() {
+  const context = await getCurrentWorkspaceContext();
+
+  if (context.user) {
+    redirect("/dashboard");
+  }
+
+  return <AuthPage mode="login" />;
 }
-

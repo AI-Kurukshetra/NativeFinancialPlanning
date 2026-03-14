@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -12,7 +11,11 @@ import { Input } from "@/components/ui/input";
 import { signupSchema, type SignupSchema } from "@/lib/schemas/auth";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
-export function SignupForm() {
+type SignupFormProps = {
+  onSwitch?: () => void;
+};
+
+export function SignupForm({ onSwitch }: SignupFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<SignupSchema>({
@@ -28,13 +31,15 @@ export function SignupForm() {
   const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
       const supabase = createSupabaseBrowserClient();
+      const emailRedirectUrl = new URL("/api/auth/callback", window.location.origin);
+      emailRedirectUrl.searchParams.set("next", "/dashboard");
 
       if (!supabase) {
         toast.error("Configure Supabase environment variables to enable authentication.");
         return;
       }
 
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         options: {
@@ -42,12 +47,19 @@ export function SignupForm() {
             full_name: values.fullName,
             organization_name: values.organizationName,
           },
-          emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+          emailRedirectTo: emailRedirectUrl.toString(),
         },
       });
 
       if (error) {
         toast.error(error.message);
+        return;
+      }
+
+      if (data.session) {
+        toast.success("Workspace created.");
+        router.push("/dashboard");
+        router.refresh();
         return;
       }
 
@@ -99,12 +111,15 @@ export function SignupForm() {
       </Button>
 
       <p className="text-center text-sm text-slate-600">
-        Already have access?{" "}
-        <Link className="font-medium text-slate-950 underline underline-offset-4" href="/login">
+        Already have an account?{" "}
+        <button
+          type="button"
+          className="font-medium text-slate-950 underline underline-offset-4 hover:text-slate-700"
+          onClick={onSwitch}
+        >
           Sign in
-        </Link>
+        </button>
       </p>
     </form>
   );
 }
-

@@ -19,7 +19,11 @@ export function WorkbookGrid({ items }: { items: WorkbookSummary[] }) {
           <CardHeader>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <CardTitle>{item.name}</CardTitle>
+                <CardTitle>
+                  <Link className="transition-colors hover:text-slate-600" href={`/workbooks/${item.id}`}>
+                    {item.name}
+                  </Link>
+                </CardTitle>
                 <CardDescription className="mt-2 max-w-xl">{item.description}</CardDescription>
               </div>
               <Badge variant={statusVariant(item.status)}>{item.status.replace("_", " ")}</Badge>

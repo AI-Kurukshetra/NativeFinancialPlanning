@@ -1,47 +1,28 @@
-import { FileDown, FileSpreadsheet, LayoutDashboard } from "lucide-react";
-
+import { PlanningCreateForm } from "@/components/app/planning-create-form";
+import { ReportingStudio } from "@/components/app/reporting-studio";
 import { AppTopbar } from "@/components/shell/app-topbar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getReportsPageData } from "@/lib/server/app-data";
 
-const reportCards = [
-  {
-    icon: LayoutDashboard,
-    title: "Executive Summary",
-    description: "Snapshot of forecast health, variance, and operating leverage.",
-  },
-  {
-    icon: FileSpreadsheet,
-    title: "Board Package",
-    description: "Narrative-ready package with assumptions, bridges, and KPI rollups.",
-  },
-  {
-    icon: FileDown,
-    title: "Export Queue",
-    description: "Reserved for CSV and XLSX generation jobs.",
-  },
-];
+export default async function ReportsPage() {
+  const { items, workbooks, schedules } = await getReportsPageData();
 
-export default function ReportsPage() {
   return (
     <div className="space-y-6">
       <AppTopbar title="Reports" subtitle="Exports, reporting views, and communication artifacts" />
-      <div className="grid gap-5 xl:grid-cols-3">
-        {reportCards.map((item) => (
-          <Card key={item.title}>
-            <CardHeader>
-              <div className="mb-3 flex size-12 items-center justify-center rounded-2xl bg-slate-950 text-white">
-                <item.icon className="size-5" />
-              </div>
-              <CardTitle>{item.title}</CardTitle>
-              <CardDescription>{item.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm leading-6 text-slate-600">
-              This route is wired for future reporting APIs and export jobs, without locking in the implementation prematurely.
-            </CardContent>
-          </Card>
-        ))}
+      <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Create report</CardTitle>
+            <CardDescription>Persist a reporting definition and link it to a workbook for export and publishing flows.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PlanningCreateForm endpoint="/api/reports" extraFields="report" submitLabel="Create report" title="Report" workbookOptions={workbooks} />
+          </CardContent>
+        </Card>
+
+        <ReportingStudio reports={items} schedules={schedules} />
       </div>
     </div>
   );
 }
-

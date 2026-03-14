@@ -4,8 +4,12 @@ import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function MetricCard({ metric }: { metric: DashboardMetric }) {
+  const isPositive = metric.change > 0;
+  const isNegative = metric.change < 0;
+  const isNeutral = !isPositive && !isNegative && (!metric.emphasis || metric.emphasis === "neutral");
+
   return (
-    <Card>
+    <Card hover>
       <CardHeader className="pb-3">
         <CardDescription>{metric.label}</CardDescription>
         <CardTitle className="text-3xl">{metric.value}</CardTitle>
@@ -13,10 +17,13 @@ export function MetricCard({ metric }: { metric: DashboardMetric }) {
       <CardContent>
         <div
           className={cn(
-            "inline-flex rounded-full px-3 py-1 text-xs font-medium",
-            metric.emphasis === "warning" && "bg-amber-100 text-amber-800",
-            metric.emphasis === "positive" && "bg-emerald-100 text-emerald-800",
-            (!metric.emphasis || metric.emphasis === "neutral") && "bg-slate-100 text-slate-700",
+            "inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em]",
+            (metric.emphasis === "warning" || isNegative) &&
+              "border-red-200 bg-red-50 text-red-700 dark:border-red-500/30 dark:bg-red-500/12 dark:text-red-300",
+            (metric.emphasis === "positive" || isPositive) &&
+              "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/12 dark:text-emerald-300",
+            isNeutral &&
+              "border-black/10 bg-black/4 text-neutral-700 dark:border-white/10 dark:bg-white/8 dark:text-neutral-300",
           )}
         >
           {metric.change > 0 ? "+" : ""}
@@ -26,4 +33,3 @@ export function MetricCard({ metric }: { metric: DashboardMetric }) {
     </Card>
   );
 }
-

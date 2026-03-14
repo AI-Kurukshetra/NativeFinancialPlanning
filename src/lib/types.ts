@@ -1,8 +1,10 @@
+import type { Route } from "next";
+
 export type WorkbookStatus = "draft" | "in_review" | "published" | "archived";
 export type UserRole = "admin" | "editor" | "viewer" | "approver";
 
 export interface NavItem {
-  href: string;
+  href: Route;
   label: string;
   description?: string;
 }
@@ -31,3 +33,32 @@ export interface BudgetLine {
   variance: number;
 }
 
+export interface CurrentOrganization {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export interface CurrentProfile {
+  id: string;
+  email: string;
+  fullName: string | null;
+  defaultOrganizationId: string | null;
+}
+
+export interface CurrentMembership {
+  id: string;
+  organizationId: string;
+  role: UserRole;
+  isDefault: boolean;
+}
+
+export interface CurrentWorkspaceContext {
+  user: {
+    id: string;
+    email: string | null;
+  } | null;
+  profile: CurrentProfile | null;
+  membership: CurrentMembership | null;
+  organization: CurrentOrganization | null;
+}
